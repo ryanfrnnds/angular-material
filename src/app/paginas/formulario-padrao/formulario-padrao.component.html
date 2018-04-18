@@ -1,0 +1,45 @@
+<mdias-container nomeDaPagina="CLIENTE" icone="search" valorBotaoNovo="NOVO CLIENTE" rotaBotaoNovo="form" [ehCarregando]="ehCarregando">
+	<mdias-col>
+		 <mat-form-field>
+			<input matInput placeholder="Nome" [(ngModel)]="cliente.nome" >
+		</mat-form-field>
+	</mdias-col>
+	<mdias-col>
+		 <mat-form-field>
+		 	<mat-select placeholder="Tipo" [(value)]="cliente.tipo" >
+				<mat-option [value]="null">-</mat-option>
+				<mat-option [value]="'F'">Pessoa Física</mat-option>
+				<mat-option [value]="'J'">Pessoa Jurídica</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</mdias-col>
+	<mdias-col>
+		 <mat-form-field>
+			<input matInput placeholder="CPF/CNPJ" [(ngModel)]="cliente.cpf" >
+		</mat-form-field>
+	</mdias-col>
+	<mdias-col>
+		 <mat-form-field>
+			<input matInput placeholder="Data de Nascimento" [(ngModel)]="cliente.dataDeNascimento" >
+		</mat-form-field>
+	</mdias-col>
+	<mdias-acoes>
+		<mdias-botao valor="PESQUISAR" (clique)="pesquisar()"></mdias-botao>
+		<mdias-botao valor="LIMPAR" background="transparent" sombra="none" cor="#212121" (clique)="limpar()"></mdias-botao>
+	</mdias-acoes>
+
+	<mdias-tabela 	[lista]="clientes" *ngIf="clientes" ehPaginado="true">
+		<mdias-coluna valor="nome" cabecalho="Nome"></mdias-coluna>
+		<mdias-coluna valor="tipo" cabecalho="Tipo"></mdias-coluna>
+		<mdias-coluna valor="cpf" cabecalho="CPF/CNPJ"></mdias-coluna>
+		<mdias-coluna valor="dataDeNascimento" cabecalho="Data de Nascimento"></mdias-coluna>
+		<mdias-coluna cabecalho="Ações">
+			<ng-template let-cliente="item">
+				<mdias-botao-menu>
+					<mdias-botao-menu-item icone="create" valor="Editar" (clique)="editar(cliente.id)"></mdias-botao-menu-item>
+					<mdias-botao-menu-item icone="delete_forever" valor="Excluir" confirmacao="true" titulo="Excluir cliente" (clique)="excluir(cliente.id)"></mdias-botao-menu-item>
+				</mdias-botao-menu>
+			</ng-template>
+		</mdias-coluna>
+	</mdias-tabela>
+</mdias-container>

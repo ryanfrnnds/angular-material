@@ -1,0 +1,34 @@
+<mdias-container nomeDaPagina="NOVO CLIENTE" icone="add_circle_outline">
+	<mdias-col>
+		 <mat-form-field>
+			<input matInput placeholder="Nome"  [(ngModel)]="cliente.nome" required>
+    		<mat-error *ngIf="validadorNome.invalid">{{getErrorMessage(validadorNome)}}</mat-error>
+		</mat-form-field>
+	</mdias-col>
+	<mdias-col>
+		 <mat-form-field>
+		 	<mat-select placeholder="Tipo" [(value)]="cliente.tipo" required>
+				<mat-option [value]="null">-</mat-option>
+				<mat-option [value]="'F'">Pessoa Física</mat-option>
+				<mat-option [value]="'J'">Pessoa Jurídica</mat-option>
+			</mat-select>
+    		<mat-error *ngIf="validadorTipo.invalid">{{getErrorMessage(validadorTipo)}}</mat-error>
+		</mat-form-field>
+	</mdias-col>
+	<mdias-col>
+		 <mat-form-field>
+			<input matInput placeholder="CPF/CNPJ" [(ngModel)]="cliente.cpf" required>
+    		<mat-error *ngIf="validadorCPFCNPJ.invalid">{{getErrorMessage(validadorCPFCNPJ)}}</mat-error>
+		</mat-form-field>
+	</mdias-col>
+	<mdias-col>
+		 <mat-form-field>
+			<input matInput placeholder="Data de Nascimento" [(ngModel)]="cliente.dataDeNascimento" required>
+    		<mat-error *ngIf="validadorData.invalid">{{getErrorMessage(validadorData)}}</mat-error>
+		</mat-form-field>
+	</mdias-col>
+	<mdias-acoes>
+		<mdias-botao valor="SALVAR" (clique)="salvar()"></mdias-botao>
+		<mdias-botao valor="CANCELAR" background="#EF5350" (clique)="cancelar()"></mdias-botao>
+	</mdias-acoes>
+</mdias-container>

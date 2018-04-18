@@ -1,0 +1,56 @@
+@import 'variaveis';
+@import 'themaMaterial';
+
+body {
+	margin: 0;
+	background: #f5f5f5;
+}
+
+
+
+.titulo {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    max-height: 100%;
+    place-content: center space-between;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    height: 150px;
+    color: #fff;
+    padding: 0 5% 50px 5%;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 80px;
+    .mat-raised-button {
+    	background: $cor-principal-clara;
+    	color: #fff;
+    }
+    .nomeDaPagina {
+    	color: $cor-principal;
+	    display: flex;
+	    align-items: center;
+	    font-size: 1.5rem;
+	    .mat-icon { 
+    	    font-size: 2.5rem;
+    		line-height: 1.5rem;
+		    margin-right: 1.5rem;
+		}
+    }
+}
+.conteudo {
+	margin-top: 100px;
+	.mat-card {
+		.mat-input-container {
+			width: 100%;
+		}
+		.acoes {
+			text-align: right;
+		    
+	    	.mat-warn {
+	    		background: #F44336;
+	    	}
+		}
+	}
+}

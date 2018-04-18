@@ -1,0 +1,7 @@
+<button mat-fab *ngIf="!mine"  (click)="acaoDoBotao()" [ngStyle]="{'color':cor, 'background-color': background, 'box-shadow':sombra}">
+	<mat-icon>{{icone}}</mat-icon>
+</button>
+<button mat-mini-fab *ngIf="mine"   (click)="acaoDoBotao()" [ngStyle]="{'color':cor, 'background-color': background, 'box-shadow':sombra}">
+	<mat-icon>{{icone}}</mat-icon>
+</button>
+

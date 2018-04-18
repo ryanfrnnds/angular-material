@@ -1,0 +1,56 @@
+@import '../../../assets/sass/variaveis';
+.alerta {
+    min-width: 250px; 
+    color: #fff; 
+    border-radius: 2px; 
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    right: 20px;
+    top: 90px;
+    padding: 1rem;
+	-webkit-animation: entrada-mensagem 0.5s, saida-mensagem 0.5s 5s;
+	animation: entrada-mensagem 0.5s, saida-mensagem 0.5s 5s;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.3);
+
+    .icone {
+        float: left;
+        display: flex;
+        align-content: center;
+        i{
+            font-size: 2rem;
+        }
+    }
+    .conteudo {
+        margin-left: 3rem;
+        margin-top: 7px;
+    }
+    .fechar {
+        float: right;
+        cursor: pointer;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+    }
+}
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes entrada-mensagem {
+    from {top: 150px; opacity: 0;} 
+    to {top: 90px; opacity: 1;}
+}
+
+@keyframes entrada-mensagem {
+    from {top: 150px; opacity: 0;}
+    to {top: 90px; opacity: 1;}
+}
+
+@-webkit-keyframes saida-mensagem {
+    from {top: 90px; opacity: 1;} 
+    to {top: 0px; opacity: 0;}
+}
+
+@keyframes saida-mensagem {
+    from {top: 90px; opacity: 1;}
+    to {top: 0px; opacity: 0;}
+}

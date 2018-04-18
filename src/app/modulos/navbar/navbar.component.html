@@ -1,0 +1,44 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <div class=logo>
+  		<a routerLink=".">
+  			<img class="logo" *ngIf="logoImg" [src]="logoImg" />
+        <mat-icon *ngIf="icone" class="example-icon">{{icone}}</mat-icon>
+  			<span class="nomeDoSistema">{{nomeDoSistema}}</span>
+  		</a>
+    </div>
+    
+    <ul class="menu clearfix">
+      <li *ngFor="let l1 of menu">
+        <a *ngIf="!l1.menus" routerLink="/{{l1.url}}">{{l1.titulo}}</a>
+        <a *ngIf="l1.menus">{{l1.titulo}}</a>
+        <ul *ngIf="l1.menus" class="sub-menu clearfix">
+
+          <li *ngFor="let l2 of l1.menus">
+            <a *ngIf="!l2.menus" routerLink="/{{l2.url}}">{{l2.titulo}}</a>
+            <a *ngIf="l2.menus">{{l2.titulo}}</a>
+            <ul *ngIf="l2.menus" class="sub-menu">
+
+              <li *ngFor="let l3 of l2.menus">
+                <a *ngIf="!l3.menus" routerLink="/{{l3.url}}">{{l3.titulo}}</a>
+                <a *ngIf="l3.menus">{{l3.titulo}}</a>
+                <ul *ngIf="l3.menus" class="sub-menu">
+
+                  <li *ngFor="let l4 of l3.menus">
+                    <a routerLink="/{{l4.url}}">{{l4.titulo}}</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <span class="example-spacer"></span>
+
+    <div class="detalhesDoUsuario" *ngIf="usuarioLogado">
+      <mat-icon class="example-icon">account_circle</mat-icon>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

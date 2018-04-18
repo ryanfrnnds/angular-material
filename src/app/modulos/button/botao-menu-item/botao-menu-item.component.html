@@ -1,0 +1,9 @@
+<button mat-menu-item *ngIf="confirmacao" (click)="openDialog()">
+	<mat-icon>{{icone}}</mat-icon>
+	<span>{{valor}}</span>
+</button>
+
+<button mat-menu-item *ngIf="!confirmacao" (click)="acaoDoBotao()">
+	<mat-icon>{{icone}}</mat-icon>
+	<span>{{valor}}</span>
+</button>

@@ -1,0 +1,33 @@
+<mdias-col s="12" m="12" l="12">
+  <table class="responsive-card-table" >
+   <thead>
+    <tr>
+     <th  *ngFor="let coluna of colunas">
+      {{coluna.cabecalho}}
+     </th>
+    </tr>
+   </thead>
+   <tbody >
+    <ng-template ngFor let-item [ngForOf]="getLista()" let-rowIndex="index">
+     <tr>
+      <ng-template ngFor let-coluna [ngForOf]="colunas" >
+       <td title="{{coluna.cabecalho}}">
+        <span *ngIf="!coluna.template">
+         {{renderizar(item, coluna.valor)}}
+        </span>
+        <span *ngIf="coluna.template">
+         <ng-container *ngTemplateOutlet="coluna.template context: {item:item, indice:rowIndex}"></ng-container>
+        </span>
+       </td>
+      </ng-template>
+     </tr>
+    </ng-template>
+   </tbody>
+   </table>
+
+  <mat-paginator #paginador *ngIf="ehPaginado" [length]="totalDeItens"
+         [pageSize]="itensPorPagina"
+         [pageIndex]="_numeroPagina"
+         (page)="alterarPagina($event)">
+  </mat-paginator>
+ </mdias-col>

@@ -1,0 +1,19 @@
+<div class="titulo">
+	<div class="nomeDaPagina"><mat-icon>{{icone}}</mat-icon> {{nomeDaPagina}}</div>
+	<button *ngIf="valorBotaoNovo" mat-raised-button routerLink="{{rotaBotaoNovo}}">{{valorBotaoNovo}}</button>
+</div>
+
+<div class="container">
+ 	<div class="conteudo">
+		<mat-card>
+			<div class="row">
+
+				<ng-content></ng-content>
+
+				<div class="loading" *ngIf="exibirCarregando()">
+					<div id="loader"></div>
+				</div>
+			</div>
+		</mat-card>
+  </div>
+</div>

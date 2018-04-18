@@ -1,0 +1,10 @@
+<div *ngIf="message" [ngStyle]="{'background-color': cor}" class="alerta" >
+	<div class="icone">
+		<i class="material-icons" *ngIf="severidade == 'SUCESSO'">check_circle</i>
+		<i class="material-icons" *ngIf="severidade != 'SUCESSO'">error</i>
+	</div>
+	<div class="conteudo">
+		{{message.text}}
+	</div>
+	<a (click)="fechar()" class="fechar">X</a>
+</div>

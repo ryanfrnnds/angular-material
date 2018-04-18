@@ -1,0 +1,6 @@
+<button mat-icon-button [matMenuTriggerFor]="menu" [ngStyle]="{'color':cor, 'background-color': background, 'box-shadow':sombra}">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <ng-content></ng-content>
+</mat-menu>
