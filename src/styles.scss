@@ -2,18 +2,26 @@
 @import "./assets/sass/themaMaterial";
 
 @font-face {
-  font-family: 'Fjalla One';
+  font-family: "Fjalla One";
   font-style: normal;
   font-weight: 400;
-  src: url('/assets/fonts/FjallaOne-Regular.ttf'),url('/novostempos/assets/fonts/FjallaOne-Regular.ttf') format('truetype');
+  src: url("assets/fonts/FjallaOne-Regular.ttf") format("truetype");
 }
 
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto'), local('Roboto-Regular'),url("assets/fonts/Roboto-Regular.ttf") format("truetype");
+    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+/* ICONES */
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src:  url('/assets/fonts/material-icon.woff2'), 
-        url('/novostempos/assets/fonts/material-icon.woff2') format('woff2');
+  src:  url('assets/fonts/material-icon.woff2') format('woff2');
 }
 
 .material-icons {
@@ -28,6 +36,48 @@
   white-space: nowrap;
   word-wrap: normal;
   direction: ltr;
-  -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
+
+html {
+  height: 100%;
+
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0px;
+
+  background: #f5f5f5 !important;
+
+  position: relative;
+
+  margin: 0;
+
+  padding-bottom: 6rem;
+
+  min-height: 100%;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mdias-erro-validacao {
+  font-size: 0.7rem;
+
+  margin-top: -1rem;
+
+  float: left;
+
+  color: #f44336;
+
+  font-weight: 700;
+}
+

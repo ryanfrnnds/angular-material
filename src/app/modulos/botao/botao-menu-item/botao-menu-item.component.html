@@ -1,7 +1,9 @@
-<mdias-botao    
-    [valor]="valor"   
-    (clique)="_clique()" 
-	[ngClass] = "'mat-menu-item'"
-	[tituloDialog]="tituloDialog"
-	[mensagemDialog]="mensagemDialog"
-></mdias-botao>
+<button mat-menu-item *ngIf="confirmacao" (click)="openDialog()">
+	<i class="material-icons" *ngIf="icone">{{icone}}</i>
+	<span>{{valor}}</span>
+</button>
+
+<button mat-menu-item *ngIf="!confirmacao" (click)="acaoDoBotao()">
+	<i class="material-icons" *ngIf="icone">{{icone}}</i>
+	<span>{{valor}}</span>
+</button>

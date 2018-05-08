@@ -1,5 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MenuItem } from '../../modelo';
+import { MenuItem, Usuario } from '../../modelo';
+import {Observable} from 'rxjs/Rx';
+import { ISubscription } from 'rxjs/Subscription';
+import { Aplicacao } from '../inicializacao/aplicacao';
+import { MdbServico } from '../servicos/mdb-servico';
+
 
 @Component({
   selector: 'mdias-navbar',
@@ -12,12 +17,10 @@ export class NavbarComponent implements OnInit {
   @Input() icone: string;
   @Input() nomeDoSistema: string;
   @Input() menu: MenuItem[];
-  @Input() usuarioLogado:any;
 
-  constructor() { 
+  constructor( public servico: MdbServico) { 
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

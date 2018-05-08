@@ -2,14 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './/app-routing.module';
 import { RouterModule } from '@angular/router';
-import { ComponentesComponent } from './paginas/componentes/componentes.component';
-import { PadroesComponent } from './paginas/padroes/padroes.component';
-import { QuickStartComponent } from './paginas/quick-start/quick-start.component';
-import { FormularioPadraoComponent } from './paginas/formulario-padrao/formulario-padrao.component';
-import { FormularioPadraoFormComponent } from './paginas/formulario-padrao/formulario-padrao-form/formulario-padrao-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClient } from 'selenium-webdriver/http';
@@ -17,29 +11,53 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { InicioComponent } from './inicio/inicio.component';
 
-import { AutenticacaoComponent, MdbServico, AcessoAutenticado, MdbHttpInterceptor } from './modulos';
 import { provedorDatePicker } from './app.const';
+import { MdbServico } from './modulos/servicos/mdb-servico';
+import { AutenticacaoComponent } from './modulos/seguranca/autenticacao/autenticacao.component';
+import { MdbHttpInterceptor } from './modulos/seguranca/interceptador/mdb-http-interceptor';
+
+import {
+  MatToolbarModule,
+  MatIconModule,
+  MatButtonModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatDialogModule,
+  MatMenuModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatAutocompleteModule,
+} from "@angular/material";
+import { CompartilhadoModule} from '../app/compartilhados/compartilhado.module';
+import {AcessoAutenticado } from '../app/modulos/seguranca/guarda-rotas/acesso-autenticado';
+import { OutraPaginaComponent } from './inicio/outra-pagina/outra-pagina.component';
+import { MdiasAppModule } from '../../public_api';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ComponentesComponent,
-    PadroesComponent,
-    QuickStartComponent,
-    FormularioPadraoComponent,
-    FormularioPadraoFormComponent,
     AutenticacaoComponent,
-    InicioComponent
+    InicioComponent,
+    OutraPaginaComponent,
   ],
   imports: [RouterModule,
             AppRoutingModule,
             BrowserModule,
-            SharedModule,
+            CompartilhadoModule,
             BrowserAnimationsModule,
             FormsModule,
             ReactiveFormsModule,
-            HttpClientModule],
+            HttpClientModule,
+            MatAutocompleteModule,
+            MdiasAppModule
+          ],
   providers: [MdbServico, AcessoAutenticado,
     {
       provide: HTTP_INTERCEPTORS,

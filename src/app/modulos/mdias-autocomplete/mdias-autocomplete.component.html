@@ -1,0 +1,23 @@
+<mat-form-field>
+    <input
+        type="text" matInput  placeholder="{{label}}"
+        [matAutocomplete]="autoComplete"
+        (focusout)="limparSeNaoPossuirSelecao()"
+        [required] = "ehObrigatorio"
+        [formControl]="controle"
+    >
+    <mat-error  >{{errosAutoComplete(controle)}}</mat-error>
+    <mat-autocomplete
+        #autoComplete="matAutocomplete" [displayWith]="display"
+        (optionSelected)= "_itemSelecionado($event)"
+    >
+        <mat-option
+        *ngFor="let opcao of opcoes | async" [value]="opcao"
+        selected= "opcao[atributoDisplay] === itemAAA[atributoDisplay]"
+        >
+        {{ display(opcao) }}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+
+

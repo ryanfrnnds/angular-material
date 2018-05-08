@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { MatButtonModule, MatIconModule } from '@angular/material';
-import { BotaoComponent } from '.';
+import { BotaoComponent } from './botao.component';
+import { MdiasModalModule } from '../mdias-modal/mdias-modal.module';
+import { GridModule } from '../grid/grid.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    MatButtonModule,
-    MatIconModule
+    CommonModule,MdiasModalModule, GridModule
+    
   ],
   declarations: [BotaoComponent],
   exports: [

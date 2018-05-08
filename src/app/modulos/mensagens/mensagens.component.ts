@@ -1,44 +1,39 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { MensagensService } from './mensagens.service';
+import { trigger,style,transition,animate,keyframes,query,stagger } from '@angular/animations';
 
 @Component({
   selector: 'mdias-mensagens',
   templateUrl: './mensagens.component.html',
-  styleUrls: ['./mensagens.component.scss'],
+	styleUrls: ['./mensagens.component.scss'],
+	animations: [
+    trigger(
+      'mdias-mensagem', [
+        transition(':enter', [
+          style({bottom: '-50px', opacity: 0}),
+          animate('300ms', style({bottom: '0', opacity: 1}))
+        ]),
+        transition(':leave', [
+          style({bottom: '0', opacity: 1}),
+          animate('300ms', style({bottom: '30px', opacity: 0}))
+        ])
+      ]
+    )
+  ]
 })
-export class MensagensComponent implements OnInit, OnDestroy {
-  
-  	severidade:string = "";
-  	cor:string;
-	message: any;
-	subscription: Subscription;
-	
+export class MensagensComponent implements OnInit {
 	constructor(private mensagensService: MensagensService) {
-		this.subscription = this.mensagensService.getMensagem().subscribe(message => { 
-			this.message = message; 
-			this.severidade = this.mensagensService.getSeveridade();
-			
-			if(this.severidade == "SUCESSO") {
-				this.cor = "#388E3C";
-			}
-			if(this.severidade == "ERRO") {
-				this.cor = "#F44336";
-			}
-			if(this.severidade == "INFO") {
-				this.cor = "#607D8B";
-			}
-		});
 	}
 
 	ngOnInit() {
 	}
 
-	ngOnDestroy() {
-		this.subscription.unsubscribe();
-	}
-	
 	fechar() {
 		this.mensagensService.limparMensagem();
+	}
+
+	public removerMensagem(index:number):void {
+		this.mensagensService.removerMensagem(index);
 	}
 }

@@ -1,43 +1,58 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/observable';
 import { Subject } from 'rxjs/Subject';
+import { Mensagem } from '../../modelo';
 
 @Injectable()
 export class MensagensService {
-  private subject = new Subject<any>();
-  private severidade:string;
-  constructor() { }
 
-  private enviarMensagem(mensagem: string) {
-    this.subject.next();
-  	this.subject.next({ text: mensagem });
-    Observable.interval(5500).take(1).subscribe(() => this.limparMensagem());
+  private mensagens:Mensagem[];
+  private index:number;
+
+  constructor() { 
+    this.mensagens = [];
+    this.index = 0;
   }
 
-  public addSucesso(mensagem: string) {
-    this.severidade = "SUCESSO";
-    this.enviarMensagem(mensagem);
+  private adicionarMensagem(mensagem: Mensagem, tempo:number) {
+    tempo = tempo ? tempo : 5000;
+    this.index++;
+    mensagem.index = this.index;
+    this.mensagens.push(mensagem);
+    this.delay(tempo).then(() => {
+      this.removerMensagem(mensagem.index);
+    })
   }
 
-  public addInformacao(mensagem: string) {
-    this.severidade = "INFO";
-    this.enviarMensagem(mensagem);
+  public addSucesso(titulo:string, mensagem: string, tempo?:number) {
+    this.adicionarMensagem(new Mensagem({"severidade": "SUCESSO", "descricao": mensagem, titulo: titulo}), tempo);
+  }
+
+  public addInformacao(titulo:string, mensagem: string, tempo?:number) {
+    this.adicionarMensagem(new Mensagem({"severidade": "INFO", "descricao": mensagem, titulo: titulo}), tempo);
   }
   
-  public addErro(mensagem: string) {
-    this.severidade = "ERRO";
-    this.enviarMensagem(mensagem);
+  public addErro(titulo:string, mensagem: string, tempo?:number) {
+    this.adicionarMensagem(new Mensagem({"severidade": "ERRO", "descricao": mensagem, titulo: titulo}), tempo);
   }
   
   limparMensagem() {
-    this.subject.next();
+    this.mensagens = [];
   }
 
-  getMensagem(): Observable<any> {
-  	return this.subject.asObservable();
+  getMensagem(): string {
+  	return "TESTE";
   }
 
-  getSeveridade() {
-    return this.severidade;
+  getMensagens() :Mensagem[] {
+    return this.mensagens;
+  }
+
+  public removerMensagem(index:number) {
+    this.mensagens = this.mensagens.filter(msg => msg.index !== index);
+  }
+
+  delay(milisegundos: number) {
+      return new Promise( resolve => setTimeout(resolve, milisegundos) );
   }
 }

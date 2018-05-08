@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BotaoMenuItemComponent } from './botao-menu-item.component';
-import { MatButtonModule,  MatIconModule, MatMenuModule } from '@angular/material';
-
+import { MatMenuModule, MatDialogModule } from '@angular/material';
+import { MdiasModalModule } from '../../mdias-modal/mdias-modal.module';
+import { DialogoConfirmacao } from './dialogo-confirmacao.component';
+import { BotaoModule } from '../botao.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    MatMenuModule,
+    MatDialogModule,
+    BotaoModule
   ],
-  declarations: [BotaoMenuItemComponent],
-  exports: [BotaoMenuItemComponent]
+  declarations: [BotaoMenuItemComponent, DialogoConfirmacao],
+  exports: [BotaoMenuItemComponent],
+  entryComponents: [DialogoConfirmacao]
 })
 export class BotaoMenuItemModule { }

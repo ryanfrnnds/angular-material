@@ -1,0 +1,31 @@
+<mdias-container nomeDaPagina="Outra pagina" icone="search">
+
+  <form  [formGroup]="formReuniao" class='form-horizontal' [ngStyle]="{'pointer-events': ehVisualizacao ? 'none':'auto'}">
+    <mdias-col>
+        <mdias-autocomplete
+        [controle] = "formReuniao.get('equipe')"
+        [atributoDisplay] = "'descricao'"
+        [ehObrigatorio] = true
+        [label] ="'EQUIPE'"
+        [lista] = "equipes"
+       >
+    </mdias-autocomplete>
+    </mdias-col>
+  </form>
+</mdias-container>
+
+{{formReuniao.get('equipe').value?.id}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,1 +1,1 @@
-export * from './filtro.module';
+export * from './filtro.component';

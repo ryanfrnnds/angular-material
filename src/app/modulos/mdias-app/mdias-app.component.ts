@@ -13,8 +13,7 @@ export class MdiasAppComponent implements OnInit {
   @Input() logoIcone: string;
   @Input() menu: MenuItem[];
   @Input() anoReferencia:string;
-  @Input() usuarioLogado:any;
-
+  
   constructor() { }
 
   ngOnInit() {

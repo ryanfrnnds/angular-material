@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { I18n } from '../..';
+import { I18n } from '../../../i18n';
 
 @Component({
   selector: 'mdias-formulario',

@@ -1,19 +1,17 @@
 <div class="titulo">
-	<div class="nomeDaPagina"><mat-icon>{{icone}}</mat-icon> {{nomeDaPagina}}</div>
-	<button *ngIf="valorBotaoNovo" mat-raised-button routerLink="{{rotaBotaoNovo}}">{{valorBotaoNovo}}</button>
+	<div class="nomeDaPagina"><i class="material-icons mat-icon" *ngIf="icone">{{icone}}</i> {{nomeDaPagina}}</div>
+	<mdias-botao *ngIf="valorBotaoNovo"  [rota]="rotaBotaoNovo" [valor]="valorBotaoNovo"></mdias-botao>
 </div>
 
 <div class="container">
  	<div class="conteudo">
-		<mat-card>
+		<mdias-card>
 			<div class="row">
-
 				<ng-content></ng-content>
-
 				<div class="loading" *ngIf="exibirCarregando()">
 					<div id="loader"></div>
 				</div>
 			</div>
-		</mat-card>
-  </div>
+		</mdias-card>
+	</div>
 </div>

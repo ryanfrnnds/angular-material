@@ -1,10 +1,14 @@
-<div *ngIf="message" [ngStyle]="{'background-color': cor}" class="alerta" >
-	<div class="icone">
-		<i class="material-icons" *ngIf="severidade == 'SUCESSO'">check_circle</i>
-		<i class="material-icons" *ngIf="severidade != 'SUCESSO'">error</i>
+<div class="mdias-mensagens-container">
+	<div class="mdias-alerta" [ngClass]="mensagem.severidade" *ngFor="let mensagem of mensagensService.getMensagens()" @mdias-mensagem>
+		<div class="icone">
+			<i class="material-icons" *ngIf="mensagem.severidade == 'SUCESSO'">sentiment_very_satisfied</i>
+			<i class="material-icons" *ngIf="mensagem.severidade == 'ERRO'">sentiment_very_dissatisfied</i>
+			<i class="material-icons" *ngIf="mensagem.severidade == 'INFO'">notifications_active</i>
+		</div>
+		<div class="conteudo">
+			<label>{{mensagem.titulo}}</label>
+			{{mensagem.descricao}}
+		</div>
+		<i class="material-icons fechar" (click)="removerMensagem(mensagem.index)">close</i>
 	</div>
-	<div class="conteudo">
-		{{message.text}}
-	</div>
-	<a (click)="fechar()" class="fechar">X</a>
 </div>

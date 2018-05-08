@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { MdbServico } from '../..';
+import { MdbServico } from '../../servicos/mdb-servico';
 
 
 

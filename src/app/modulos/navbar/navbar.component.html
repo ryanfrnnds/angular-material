@@ -36,9 +36,19 @@
     </ul>
 
     <span class="example-spacer"></span>
-
-    <div class="detalhesDoUsuario" *ngIf="usuarioLogado">
-      <mat-icon class="example-icon">account_circle</mat-icon>
+    <div class="detalhesDoUsuario">
+      <mat-icon class="iconeDoUsuario">account_circle</mat-icon>
+      <div class="popover above">
+        <span class="icone"><i class="material-icons">face</i></span>
+        <div class="detalhe">
+          <span class="nome">{{servico.usuarioLogado?.nome}}</span>
+          <span class="matricula">{{servico.usuarioLogado?.codigo}}</span>
+          <!--
+            Implementar quando decidir o que fazer com o clique do SAIR! 
+          <span class="sair"><i class="material-icons">exit_to_app</i>Sair</span>
+          --> 
+        </div>
+      </div>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

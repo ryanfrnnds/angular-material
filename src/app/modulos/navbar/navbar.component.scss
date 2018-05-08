@@ -114,7 +114,7 @@ mdias-menu-item { height: 100%; }
 		font-family: sans-serif;
 		font-size: 1rem;
 		text-transform: uppercase;
-	    font-family: Roboto, sans-serif;
+	    font-family: $font-principal;
 	    cursor: pointer;
 	}
 	li {
@@ -166,4 +166,110 @@ mdias-menu-item { height: 100%; }
 	.menu {
 		display: none;
 	}
+}
+.detalhesDoUsuario {
+	display: inline-block;
+	position: relative;
+	.popover {
+		background-color: rgba(255,255,255,0.9);
+		border-radius: 5px;
+		top: 60px;
+		box-shadow: 0 0 5px rgba(0,0,0,0.4);
+		color: rgba(0,0,0,1);;
+		display: none;
+		font-size: 12px;
+		right: 0px;
+		padding: 7px 10px;
+		position: absolute;
+		width: auto;
+		z-index: 4;
+		cursor: default;
+
+		&:before {
+			border-bottom: 7px solid rgba(255,255,255,0.9);
+			border-right: 7px solid transparent;
+			border-left: 7px solid transparent;
+			top: -7px;
+			content: '';
+			display: block;
+			right: 25px;
+			margin-left: -7px;
+			position: absolute;
+		}
+
+		.icone {
+			float: left;
+			height: 3rem;
+			width: 	3rem;
+			padding-top:	0.5rem; 
+
+			i {
+				font-size: 3rem;
+				color: $cor-principal;
+			}
+		}
+		.detalhe {
+			margin-left: 3.5rem; 
+			.nome {
+				font-family: $font-titulo;
+				font-size: 1.1rem;
+				color: $cor-principal;
+			}
+			.matricula {
+				text-transform: uppercase;
+				float: left;
+				color: $cor-principal;
+				margin-top: -5px;
+			}
+			.sair {
+				float: right;
+				margin-top: -5px;
+				cursor: pointer;
+				i {
+					font-size: 1rem;
+					float: left;
+					margin-top: 7px;
+					margin-right: 5px;
+				}
+
+				&:hover {
+					background: rgba(0,0,0,0.1);
+				}
+			}
+		}
+	}
+
+	&:hover {
+		.popover {
+			display: block;
+			-webkit-animation: fade-in .3s linear 1, move-up .3s linear 1;
+			-moz-animation: fade-in .3s linear 1, move-up .3s linear 1;
+			-ms-animation: fade-in .3s linear 1, move-up .3s linear 1;
+		}
+	}
+}
+  
+@-webkit-keyframes fade-in {
+	from   { opacity: 0; }
+	to { opacity: 1; }
+}
+@-moz-keyframes fade-in {
+	from   { opacity: 0; }
+	to { opacity: 1; }
+}
+@-ms-keyframes fade-in {
+	from   { opacity: 0; }
+	to { opacity: 1; }
+}
+@-webkit-keyframes move-up {
+	from   { top: 80px; }
+	to { top: 60px; }
+}
+@-moz-keyframes move-up {
+	from   { top: 80px; }
+	to { top: 60px; }
+}
+@-ms-keyframes move-up {
+	from   { top: 80px; }
+	to { top: 60px; }
 }

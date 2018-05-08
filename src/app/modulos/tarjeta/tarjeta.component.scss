@@ -1,3 +1,5 @@
+@import '../../../assets/sass/variaveis';
+
 .tarjeta{
     background: #F44336;
     position: absolute;
@@ -7,7 +9,7 @@
     text-align: center;
     padding: 1rem;
     color: #fff;
-    font-family: 'Roboto', sans-serif;
+    font-family: $font-principal;
     opacity: 0.9;
     z-index: -3;
     font-weight: bold;

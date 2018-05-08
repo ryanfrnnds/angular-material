@@ -1,0 +1,20 @@
+.mdias-card {
+    background: #ffffff;
+    display: flex;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    position: relative;
+    background: #fff;
+    border-radius: 2px;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-weight: 400;
+    min-height: 200px;
+    overflow: hidden;
+    flex-direction: column;
+
+    .card-content {
+        line-height: 18px;
+        overflow: hidden;
+        padding: 16px 16px 0 16px;   
+    }
+}

@@ -1,7 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
-
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'mdias-botao',
@@ -11,40 +9,49 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class BotaoComponent implements OnInit {
 
   @Input() valor: string;
-
-  @Input() ehDesabilitado: boolean;
   @Input() icone: string;
+  @Input() mini: boolean;
+  @Input() estilo: string = '';
+  @Input() classe: string = '';
 
-  @Input() estilo: string;
-  @Input() ngClass: string = 'mat-raised-button';
-
+  @Input() rota: string;
+  @Input() ehDesabilitado: boolean;
 
   @Output() clique = new EventEmitter<any>();
-  // dialogConfirmacao: MatDialogRef<DialogoConfirmacao>;
 
   @Input() tituloDialog: string;
   @Input() mensagemDialog: string;
 
-  constructor(public dialog: MatDialog) { }
+  private modalConfirmacaoAtivo: boolean = false;
 
-  ngOnInit() {}
+  constructor(public router: Router) { }
+
+  ngOnInit() {
+    if (this.icone) {
+      this.valor = '';
+      this.classe = this.classe + ' mdias-icone';
+    if (this.mini) {
+        this.classe = this.classe + ' mdias-mini';
+      }
+    }
+  }
 
   acaoDoBotao() {
-    /*
-    if (this.tituloDialog || this.mensagemDialog) {
-      const dialogRef = this.dialog.open(DialogoConfirmacao, {
-        data: { titulo: this.tituloDialog, mensagem: this.mensagemDialog }
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.clique.emit();
-        }
-      });
+    if (this.rota) {
+      this.router.navigateByUrl(this.rota);
+    } else if (this.tituloDialog || this.mensagemDialog) {
+      this.modalConfirmacaoAtivo = true;
     } else {
       this.clique.emit();
     }
-*/
+  }
+
+  public sim() {
+    this.modalConfirmacaoAtivo = false;
     this.clique.emit();
+  }
+
+  public nao() {
+    this.modalConfirmacaoAtivo = false;
   }
 }

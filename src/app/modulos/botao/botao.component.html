@@ -1,9 +1,17 @@
 <button 
+    class="mdias-botao"
     (click)="acaoDoBotao()" 
     [ngStyle]="estilo" 
-    [disabled]="ehDesabilitado"
-    [ngClass]="ngClass"
-    >
-    <mat-icon>{{icone}}</mat-icon>
-    <span> {{valor}} </span>
+    [ngClass]="classe"
+    [disabled]="ehDesabilitado">
+{{valor}}
+<i class="material-icons" *ngIf="icone">{{icone}}</i>
 </button>
+
+<mdias-modal [titulo]="tituloDialog" [ativo]="modalConfirmacaoAtivo" classe="mdias-confirmacao">
+    {{mensagemDialog}}
+    <div style="width: 100%; text-align: center; display: block; margin-top: 10px;">
+        <button (click)="sim()" class="mdias-btn-confirmacao">SIM</button>
+        <button (click)="nao()" class="mdias-btn-confirmacao">NÃO</button>
+    </div>
+</mdias-modal>

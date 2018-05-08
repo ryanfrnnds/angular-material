@@ -1,41 +1,136 @@
-<div class="example-container mat-elevation-z8">
-    <mat-table #table [dataSource]="dataSource" matSort>
-  
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-      </ng-container>
-  
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-      </ng-container>
-  
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-      </ng-container>
-  
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
-      </ng-container>
-  
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-  </div>
+<!--
+<mdias-container nomeDaPagina="Início" icone="home" valorBotaoNovo="novo" rotaBotaoNovo="autenticar">
+
+  <mdias-titulo valor="PESQUISAR"></mdias-titulo>
+  <mdias-tabela [lista]="lista" ehPaginado=true itensPorPagina=10>
+    <mdias-coluna cabecalho="Nome" valor="nome"></mdias-coluna>
+    <mdias-coluna cabecalho="CPF" valor="cpf"></mdias-coluna>
+    <mdias-coluna cabecalho="Nascimento" valor="nascimento"></mdias-coluna>
+    <mdias-coluna cabecalho="Ativo" >
+      <ng-template let-item="item" >
+        <i class="material-icons" *ngIf="item.ativo">done</i>
+        <i class="material-icons" *ngIf="!item.ativo">close</i>
+      </ng-template>
+    </mdias-coluna>
+    <mdias-coluna cabecalho="Ações" >
+        <ng-template let-item="item" >
+            <mdias-botao-menu>
+              <mdias-botao-menu-item icone="visibility" valor="Visualizar" ></mdias-botao-menu-item>
+              <mdias-botao-menu-item icone="create" valor="Editar" ></mdias-botao-menu-item>
+              <mdias-botao-menu-item icone="delete_forever" valor="Excluir" tituloDialog="Confirma a exclusão?" confirmacao="true" titulo="Excluir" (clique)="carregarItensNaLista()"></mdias-botao-menu-item>
+            </mdias-botao-menu>
+        </ng-template>
+      </mdias-coluna>
+  </mdias-tabela>
 
 
-  <mdias-botao     
-    [valor]="traduzir('titulo.ti.t')"
-    [tituloDialog]="'Teste Titulo'" 
-    [mensagemDialog]="mensagemDialogCancelar" 
-    [mensagemDialog]="'Teste Mensagem dialog'" 
-    [ngStyle]="{'background-color': '#EF5350'}"
-  ></mdias-botao>
-  
+  <mdias-acoes>
+    <mdias-botao icone="bug_report" mini="true" (clique)="abrirModal()"></mdias-botao>
+  </mdias-acoes>
+
+
+  <mdias-outra-pagina
+    [item]="item"
+  >
+
+  </mdias-outra-pagina>
+
+  <form class="form-horizontal" [formGroup]="formulario" (submit)="false">
+    <div  formGroupName="geral">
+      <mdias-col l="6" m="6">
+        <mdias-autocomplete
+        [controle] = "formulario.get('geral').get('parametroPai')"
+        [atributoDisplay] = "'descricao'"
+        [ehObrigatorio] = false
+        [label] ="'Parametro PAI'"
+        [lista] = "listaParametroPai"
+        (itemSelecionado) = "parametroPaiSelecionado($event)"
+       >
+        </mdias-autocomplete>
+    </mdias-col>
+    
+    <mdias-col l="6" m="6">
+      <mdias-autocomplete
+      [controle] = "formulario.get('geral').get('codigoPai')"
+      [atributoDisplay] = "'descricao'"
+      [ehObrigatorio] = false
+      [label] ="'Codigo PAI'"
+      [lista] = "listaCodigoPai"
+      [dependentes] = "[formulario.get('geral').get('parametroPai')]"
+     >
+      </mdias-autocomplete>
+    </mdias-col> 
+    </div>
+</form>
+
+ 
+
+</mdias-container>
+
+
+<mdias-modal titulo="Teste" [ativo]="onModal">
+  <mdias-col>b</mdias-col>
+  <mdias-col>c</mdias-col>
+  <mdias-col>d</mdias-col>
+  <mdias-col>b</mdias-col>
+  <mdias-col>b</mdias-col>
+  <mdias-col>c</mdias-col>
+  <mdias-col>d</mdias-col>
+  <mdias-col>b</mdias-col>
+  <mdias-col>b</mdias-col>
+  <mdias-col>c</mdias-col>
+  <mdias-col>d</mdias-col>
+  <mdias-col>b</mdias-col>
+  <mdias-acoes>
+    <mdias-botao valor="Fechar Modal" (clique)="fecharModal()"></mdias-botao>
+  </mdias-acoes>
+</mdias-modal>
+-->
+<mdias-container nomeDaPagina="Início" icone="home" valorBotaoNovo="novo" rotaBotaoNovo="autenticar">
+  <mdias-tabela
+    *ngIf="true"
+    
+    [totalDeItens]="3"
+    [ehPaginado]="true"
+    [itensPorPagina]="1"
+    [ehLazy]="true"
+    (onLazy)= "teste($event)"
+    [lista] = "listaTabela"
+  >
+    <mdias-coluna
+    [valorCabecalho] = "'Nome'"
+    [sorteada] = "true"
+    [atributo] = "'nome'"
+    >
+    </mdias-coluna>
+    <mdias-coluna
+    [valorCabecalho] = "'Criado Por'"
+    [sorteada] = "true"
+    [atributo] = "'criadoPor'"
+    >
+    </mdias-coluna>
+    
+    <mdias-coluna
+    [valorCabecalho] = "'Ações'"
+    [atributo] = "'acoes'"
+    >
+    <ng-template let-item="item">
+      <mdias-botao-menu>
+          <mdias-botao-menu-item (clique)="editar(item)" icone="create" [valor]="'Editar'" ></mdias-botao-menu-item>
+      </mdias-botao-menu>  
+    </ng-template>
+    </mdias-coluna>
+  </mdias-tabela>
+</mdias-container>
+
+
+
+
+
+
+
+
+
+
+
+

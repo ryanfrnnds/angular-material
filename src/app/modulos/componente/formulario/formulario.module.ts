@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormularioComponent } from './formulario.component';
-import { ContainerModule, ButtonModule, GridModule, BotaoConfirmacaoModule } from '../..';
 import { MatCardModule } from '@angular/material';
+import { GridModule } from '../../grid/grid.module';
+import { BotaoModule } from '../../botao/botao.module';
 
 @NgModule({
   imports: [
-    CommonModule, ButtonModule, BotaoConfirmacaoModule, GridModule
+    CommonModule, BotaoModule, GridModule
   ],
   declarations: [FormularioComponent],
   exports: [FormularioComponent]

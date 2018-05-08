@@ -1,64 +1,140 @@
+import { MdbServico } from './../modulos/servicos/mdb-servico';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { TabelaComponent } from '../modulos/tabela/tabela.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import * as _moment from 'moment';
 import { Pageable } from '../modelo';
-import { MdbServico, MDBComponente } from '../modulos';
+import { MdiasModalComponent } from '../modulos/mdias-modal/mdias-modal.component';
+import { MensagensService } from '../modulos/mensagens/mensagens.service';
+import * as _moment from 'moment';
+import { Router } from '@angular/router';
 const moment =  _moment;
+
+class ParametroPai {
+  constructor(public id: number, public descricao: string) { }
+}
+class CodigoPai {
+  constructor(public id: number, public idPai: number, public descricao: string) { }
+}
+
 
 @Component({
   selector: 'mdias-inicio',
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.scss']
 })
-export class InicioComponent extends MDBComponente implements OnInit, AfterViewInit {
+export class InicioComponent implements OnInit, AfterViewInit {
+
+  public lista:any[];
+
+  public item: any;
+
+  public  formulario: FormGroup;
+
+  public headerLista = ['nome', 'criadoPor', 'acoes'];
+  public listaTabela: Array<any>;
 
 
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  @ViewChild(MatSort) sort: MatSort;
+  onModal:boolean = false;
 
-  constructor(private mdbServico: MdbServico, private formBuilder: FormBuilder) {
-    super();
+  listaParametroPai = [
+    new ParametroPai(1, 'Parametro 1'),
+    new ParametroPai(2, 'Parametro 2'),
+    new ParametroPai(3, 'Adc aa')
+  ];
+
+  public listaCodigoPai = [];
+
+
+
+  constructor(public rota: Router
+    , mdbServico: MdbServico
+    , public formBuilder: FormBuilder
+  ) {
+    this.lista = [];
+
+    mdbServico.get<Array<any>>('consulta/equipes').subscribe(equipes => {
+      this.item = equipes[3];
+    });
+
+    const geral = this.formBuilder.group({
+      nome: [null, [Validators.required, Validators.pattern('^[A-Z]+$')]],
+      descricao: [null, [Validators.required, Validators.pattern('^[A-Z]+$')]],
+      ativo: [true],
+      parametroPai: [null],
+      codigoPai: [null],
+    });
+    this.formulario = this.formBuilder.group({
+      geral: geral
+    });
+
   }
 
-  ngOnInit() {}
+  pesquisar() {
+    const LISTA_PARAMETROS: any[] = [
+      {id: 1, nome: 'Parametro 1', criadoPor: 'ter01205', dataCriacao: new Date('2015-04-01'), atualizadoPor: '', dataAtualizacao: null, ativo: true},
+      {id: 2, nome: 'Parametro 2', criadoPor: 'ter01205', dataCriacao: new Date('2015-04-01'), atualizadoPor: 'ter01205', dataAtualizacao: new Date('2018-04-12'), ativo: true},
+      {id: 3, nome: 'Parametro 3', criadoPor: 'ter01205', dataCriacao: new Date('2015-04-01'), atualizadoPor: 'ter01205', dataAtualizacao: new Date('2018-04-12'), ativo: false},
+    ];
+    this.listaTabela = LISTA_PARAMETROS;
+  }
+
+  editar(item){
+    console.log(item);
+  }
+
+  public teste(event) {
+    console.log(event);
+  }
+
+  public parametroPaiSelecionado(parametroPai) {
+    const lista = [
+      new CodigoPai(1, 1, 'Codigo 1'),
+      new CodigoPai(2, 2, 'Codigo 2'),
+      new CodigoPai(3, 3, 'Codigo 3')
+    ];
+    this.listaCodigoPai = lista.filter(option => option.idPai === parametroPai.id);
+  }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+  }
+
+
+  ngOnInit() {
+    setTimeout(() => {this.pesquisar();}, 1000);
+    
+  }
+
+  public irPara() {
+    this.rota.navigateByUrl('/outraPagina');
+  }
+
+
+  carregarItensNaLista() {
+    this.lista.push({nome:"Matheus Amaral Teixeira", cpf:"074.072.245-01", nascimento:"13/09/1972", ativo: true});
+    this.lista.push({nome:"Gabriel Machado Gomes", cpf:"397.471.268-26", nascimento:"17/01/1970", ativo: true});
+    this.lista.push({nome:"Bernardo Gomes Amaral", cpf:"004.032.894-40", nascimento:"03/01/1964", ativo: false});
+    this.lista.push({nome:"Mauro Machado Gomes", cpf:"162.312.990-74", nascimento:"01/07/1962", ativo: true});
+    this.lista.push({nome:"Davi Ducati Teixeira", cpf:"034.513.544-03", nascimento:"08/10/1958", ativo: true});
+    this.lista.push({nome:"Heitor Amaral Teixeira", cpf:"985.146.100-82", nascimento:"02/10/1954", ativo: false});
+    this.lista.push({nome:"Guilherme Amaral Teixeira", cpf:"979.146.310-78", nascimento:"08/04/1970", ativo: true});
+    this.lista.push({nome:"Lucas Gomes Ducati", cpf:"765.451.137-04", nascimento:"27/01/1994", ativo: false});
+    this.lista.push({nome:"Bernardo Gomes Ducati", cpf:"948.091.725-46", nascimento:"17/03/1990", ativo: false});
+    this.lista.push({nome:"Heitor Machado Gomes", cpf:"980.470.048-40", nascimento:"11/01/1986", ativo: true});
+    this.lista.push({nome:"Mauro Gomes Machado", cpf:"203.246.004-10", nascimento:"21/11/1950", ativo: true});
+    this.lista.push({nome:"Lucas Machado Gomes", cpf:"834.486.975-75", nascimento:"28/01/1962", ativo: false});
+    this.lista.push({nome:"Carlos Teixeira Amaral", cpf:"304.458.090-00", nascimento:"07/08/1992", ativo: true});
+    this.lista.push({nome:"Mauro Amaral Machado", cpf:"676.355.865-13", nascimento:"20/05/1990", ativo: true});
+    this.lista.push({nome:"Gabriel Ducati Amaral", cpf:"052.110.411-43", nascimento:"13/02/1974", ativo: false});
+  }
+
+  abrirModal() {
+    this.onModal = true;
+  }
+
+  fecharModal() {
+    this.onModal = false;
   }
 }
-
-export interface Element {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: Element[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];

@@ -1,14 +1,14 @@
 import 'rxjs/add/operator/map';
 import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Aplicacao } from '../';
+import { Observable } from 'rxjs/observable';
 import { Usuario } from '../../modelo';
+import { Aplicacao } from '../inicializacao/aplicacao';
 
 @Injectable()
 export class MdbServico {
 
-    public	usuarioLogado: Usuario;
+    public usuarioLogado: Usuario;
 
     constructor(private http: HttpClient) {}
 
@@ -31,7 +31,7 @@ export class MdbServico {
     }
 
     public getRecursoAssets<T>(caminho): Observable<T> {
-      return this.http.get<T>('/assets/' + caminho );
+      return this.http.get<T>('assets/' + caminho );
     }
 
     public salvarOuAtualizar<T>(rest, entidade: T) {

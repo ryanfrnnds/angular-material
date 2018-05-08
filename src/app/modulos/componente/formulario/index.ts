@@ -1,1 +1,1 @@
-export * from './formulario.module';
+export * from './formulario.component';

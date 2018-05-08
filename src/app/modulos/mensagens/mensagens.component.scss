@@ -1,56 +1,82 @@
 @import '../../../assets/sass/variaveis';
-.alerta {
-    min-width: 250px; 
-    color: #fff; 
-    border-radius: 2px; 
-    padding: 16px;
-    position: fixed;
-    z-index: 1;
-    right: 20px;
-    top: 90px;
-    padding: 1rem;
-	-webkit-animation: entrada-mensagem 0.5s, saida-mensagem 0.5s 5s;
-	animation: entrada-mensagem 0.5s, saida-mensagem 0.5s 5s;
-    font-family: 'Roboto', sans-serif;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.3);
 
-    .icone {
-        float: left;
-        display: flex;
-        align-content: center;
-        i{
-            font-size: 2rem;
+.mdias-mensagens-container {
+
+    position: fixed;
+    top: 85px;    
+    right: 20px;
+    width: 301px;
+    z-index: 1009;
+    
+    .mdias-alerta {
+
+        border: 0 none;
+        color: #212121;
+        margin: 0 0 14px 0;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+        position: relative;
+        margin: 0 0 10px 0;
+        opacity: 0.85;    
+        padding: 14px;
+        display: inline-block;
+
+        transition: opacity 0.5s;
+
+        .fechar {
+            position: absolute;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+            cursor: pointer;
+        }
+
+        .icone {
+            display: inline-block;
+            margin-right: 14px;
+            i{
+                font-size: inherit;
+                text-rendering: auto;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                text-indent: 0px !important;
+                text-align: center;
+                font-size: 36px;
+            }
+        }
+        
+
+        .conteudo {
+            label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 7px;
+            }
+            padding: 0 0 5px 0;
+            width: 220px;
+            float: right;
+            font-family: $font-principal;
+        }
+        
+        &:hover {
+            opacity: 1;
+            .fechar {
+                opacity: 1;
+            }
         }
     }
-    .conteudo {
-        margin-left: 3rem;
-        margin-top: 7px;
+
+    .SUCESSO {
+        background-color: #388e3c;
+        color: #fff;
     }
-    .fechar {
-        float: right;
-        cursor: pointer;
-        position: absolute;
-        right: 5px;
-        top: 5px;
+
+    .INFO {
+        background-color: #ffe399;
     }
-}
-/* Animations to fade the snackbar in and out */
-@-webkit-keyframes entrada-mensagem {
-    from {top: 150px; opacity: 0;} 
-    to {top: 90px; opacity: 1;}
-}
 
-@keyframes entrada-mensagem {
-    from {top: 150px; opacity: 0;}
-    to {top: 90px; opacity: 1;}
-}
-
-@-webkit-keyframes saida-mensagem {
-    from {top: 90px; opacity: 1;} 
-    to {top: 0px; opacity: 0;}
-}
-
-@keyframes saida-mensagem {
-    from {top: 90px; opacity: 1;}
-    to {top: 0px; opacity: 0;}
-}
+    .ERRO {
+        background-color: #d32f2f;
+        color: #fff;
+    }
+}   

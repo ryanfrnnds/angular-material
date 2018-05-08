@@ -1,8 +1,9 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { timeout } from 'rxjs/operator/timeout';
-import { Aplicacao, MdbServico } from '../..';
 import { Usuario } from '../../../modelo';
+import { MdbServico } from '../../servicos/mdb-servico';
+import {Aplicacao} from '../../inicializacao/aplicacao'
 
 @Component({
   selector: 'app-autenticacao',

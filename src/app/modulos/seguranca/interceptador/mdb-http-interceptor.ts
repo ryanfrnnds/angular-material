@@ -1,10 +1,9 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders } from '@angular/common/http';
-// tslint:disable-next-line:import-blacklist
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
-import { MdbServico } from '../..';
+import { MdbServico } from '../../servicos/mdb-servico';
 
 
 @Injectable()
@@ -22,8 +21,6 @@ intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> 
 
   authReq = req.clone({headers: cabecalho});
 
-  return next.handle(authReq).catch((error, caught) => {
-  return Observable.throw(error);
-  }) as any;
+  return next.handle(authReq);
   }
 }
