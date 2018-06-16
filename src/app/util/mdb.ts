@@ -60,7 +60,7 @@ export class MDB {
         this.singleton = new MDB();
       }
       if(dependencias){
-        this.singleton.traducao = I18n.Instance(dependencias.contexto.confI18n);
+        this.singleton.traducao = I18n.Instance(dependencias.contexto.confI18n).traducao;
         const referenciaLingua: string = dependencias.contexto.confI18n ? dependencias.contexto.confI18n : 'pt-BR';
         this.singleton.inciado = dependencias.angular.http.get<any>('assets/i18n/' + referenciaLingua + '.json').map( (traducao) => {
           if (traducao) {
