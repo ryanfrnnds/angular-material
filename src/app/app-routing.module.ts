@@ -7,12 +7,16 @@ import { InicioComponent } from './inicio/inicio.component';
 import { AcessoAutenticado } from './modulos/seguranca/guarda-rotas/acesso-autenticado';
 import { AutenticacaoComponent } from '../app/modulos/seguranca/autenticacao/autenticacao.component';
 import { OutraPaginaComponent } from './inicio/outra-pagina/outra-pagina.component';
+import { MdbAcsServico } from './modulos/acs/servico';
 
 
 
 const routes: Routes = [
   { path: 'autenticar', component: AutenticacaoComponent },
-  { path: 'inicio', component: InicioComponent, canActivate: [AcessoAutenticado]},
+  { path: 'inicio', component: InicioComponent, canActivate: [AcessoAutenticado, MdbAcsServico], data: { 
+    funcoes: ['MNT0001']
+    }
+  },
   { path: 'outraPagina', component: OutraPaginaComponent},
   { path: '**', redirectTo: 'inicio', pathMatch: 'full'}
 ];
