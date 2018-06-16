@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MenuItem } from '../../../modelo';
+import { MenuItem } from '../../../modelo/menu-item';
 
 @Component({
   selector: 'mdias-menu-item',

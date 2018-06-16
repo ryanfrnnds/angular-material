@@ -1,12 +1,10 @@
-import { MdbServico } from './../modulos/servicos/mdb-servico';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Pageable } from '../modelo';
 import { MdiasModalComponent } from '../modulos/mdias-modal/mdias-modal.component';
-import { MensagensService } from '../modulos/mensagens/mensagens.service';
+import { MdbMensageria } from '../modulos/mensagens/mensagens.service';
 import * as _moment from 'moment';
 import { Router } from '@angular/router';
 const moment =  _moment;
@@ -50,20 +48,14 @@ export class InicioComponent implements OnInit, AfterViewInit {
 
 
   constructor(public rota: Router
-    , mdbServico: MdbServico
     , public formBuilder: FormBuilder
   ) {
     this.lista = [];
-
-    mdbServico.get<Array<any>>('consulta/equipes').subscribe(equipes => {
-      this.item = equipes[3];
-    });
-
     const geral = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.pattern('^[A-Z]+$')]],
       descricao: [null, [Validators.required, Validators.pattern('^[A-Z]+$')]],
       ativo: [true],
-      parametroPai: [null],
+      parametroPai: [null, [Validators.required]],
       codigoPai: [null],
     });
     this.formulario = this.formBuilder.group({
@@ -82,11 +74,9 @@ export class InicioComponent implements OnInit, AfterViewInit {
   }
 
   editar(item){
-    console.log(item);
   }
 
   public teste(event) {
-    console.log(event);
   }
 
   public parametroPaiSelecionado(parametroPai) {
@@ -101,10 +91,13 @@ export class InicioComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
   }
 
+  submit(event) {
+    event.stopPropagation();
+  }
+
 
   ngOnInit() {
     setTimeout(() => {this.pesquisar();}, 1000);
-    
   }
 
   public irPara() {

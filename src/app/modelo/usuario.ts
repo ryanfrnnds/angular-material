@@ -8,6 +8,7 @@ export class Usuario {
     public tipoUsuario: string;
     public autenticado: boolean;
     public parametros: any;
+
     constructor(init: Partial<Usuario> = null) {
       Object.assign(this, init);
     }

@@ -1,8 +1,7 @@
 
-<mdias-app 	nomeDoSistema="NOVOS TEMPOS"
+<mdias-app 	*ngIf= "iniciado" 
 			logoIcone="bug_report"
-			anoReferencia="2018"
-			[menu]="menu">
+			anoReferencia="2018">
 	<router-outlet></router-outlet>
 	<mdias-mensagens></mdias-mensagens>
 </mdias-app>

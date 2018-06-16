@@ -2,14 +2,9 @@
 import { FormControl, FormBuilder, AbstractControl } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { UrlSegment, Router, ActivatedRoute } from '@angular/router';
-import { MdbServico } from '../servicos/mdb-servico';
-import { MensagensService } from '../mensagens/mensagens.service';
-import { I18n } from '../../i18n';
-import { ObjetoUtilitario } from '../../util/objeto-utilitario';
+import { MDB } from './mdb';
 
 export class MDBComponente {
-  private traducao: any;
-
   public onPesquisar = new EventEmitter<any>();
   public onAdicionarEmLista = new EventEmitter<any>();
   public onSalvar = new EventEmitter<any>();
@@ -17,31 +12,11 @@ export class MDBComponente {
   public indiceItemEdicao: number;
   public ehCarregando: boolean = false;
 
-  constructor(
-    public rota: Router
-  , public rotaAtiva: ActivatedRoute
-  , public mdbServico: MdbServico
-  , public servicoMensagem: MensagensService
-  , public formBuilder: FormBuilder
-  ) {
-    this.traducao = I18n.Instance().traducao;
+  public traducao() {
+    return MDB.traducao;
   }
 
-  public traduzir(chave: string , parametros: any = null): string {
-    if (chave) {
-      let texto: string = ObjetoUtilitario.Instance().buscarValor(this.traducao,chave);
-      if (parametros) {
-        for (const key in parametros) {
-          if (parametros.hasOwnProperty(key)) {
-            const item = parametros[key];
-            texto = texto.replace(new RegExp('{{' + key + '}}', 'g'), item);
-          }
-        }
-      }
-      return texto;
-    }
-    return '';
-  }
+  constructor() {}
 
   public resetar( formulario ) {
     for (const key in  formulario.controls) {
@@ -50,8 +25,10 @@ export class MDBComponente {
         if (control.controls) {
           this.resetar(control);
         } else {
-          control.setValue(undefined);
-          control.markAsUntouched();
+          if(control.enabled) {
+            control.setValue(undefined);
+            control.markAsUntouched();
+          }
         }
       }
     }
@@ -84,10 +61,10 @@ export class MDBComponente {
   }
 
   public navegarPara(path) {
-    this.rotaAtiva.url.subscribe(urlSegment => {
+    MDB.rotaAtiva.url.subscribe(urlSegment => {
       const pathDeSaida = this.formarUrl(urlSegment);
-      const idConfig: number = this.rota.config.findIndex(rota => rota.path === pathDeSaida);
-      this.rota.navigate([path], {queryParams : {idConfigRota: idConfig}});
+      const idConfig: number = MDB.rota.config.findIndex(rota => rota.path === pathDeSaida);
+      MDB.rota.navigate([path], {queryParams : {idConfigRota: idConfig}});
     });
   }
 
@@ -109,6 +86,7 @@ export class MDBComponente {
       this.onAdicionarEmLista = new EventEmitter();
     } else {
       this.marcarComoTocado(formulario);
+      this.onAdicionarEmLista = new EventEmitter();
     }
   }
 
@@ -118,11 +96,12 @@ export class MDBComponente {
       this.onSalvar = new EventEmitter();
     } else {
       this.marcarComoTocado(formulario);
+      this.onSalvar = new EventEmitter();
     }
     }
 
   public error(control: AbstractControl, error: string = 'required', msgError: string = 'mdbComponentes.erro.obrigatoriedade') {
-    return control.hasError(error) ? this.traduzir(msgError) : '';
+    return control.hasError(error) ? MDB.traduzir(msgError) : '';
   }
 
   public edicaoEmLista( lista, indice) {
@@ -142,6 +121,10 @@ export class MDBComponente {
     controle.reset();
   }
 
+  public traduzir(chave: string , parametros: any = null): string {
+    return MDB.traduzir(chave,parametros);
+  }
+
   public pesquisar(formulario: AbstractControl = null) {
     if (formulario == null || formulario === undefined || formulario.valid) {
       this.ehCarregando = true;
@@ -149,10 +132,25 @@ export class MDBComponente {
       this.onPesquisar = new EventEmitter<any>();
     } else {
       this.marcarComoTocado(formulario);
+      this.onPesquisar = new EventEmitter<any>();
     }
   }
 
   public seEditandoLista(): boolean {
     return this.indiceItemEdicao != null || this.indiceItemEdicao !== undefined;
+  }
+
+  public mostrarSucesso(mensagem: string = null, pathRota:string = null) {
+    mensagem =  mensagem ? mensagem : MDB.traduzir('mdbComponentes.operacao.sucesso.salvar');
+    MDB.mensageria.addSucesso('',mensagem);
+    if(pathRota){
+      MDB.rota.navigate([pathRota]);
+    }
+  }
+
+  public mostrarError(httpError, mensagem: string = null) {
+    const tituloError = '';
+    const mensagemError = mensagem ? mensagem : MDB.buscarValor(httpError, 'error.mensagem');
+    MDB.mensageria.addErro(tituloError,mensagemError);
   }
 }

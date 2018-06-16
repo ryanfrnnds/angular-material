@@ -1,20 +1,44 @@
 <mdias-col s="12" m="12" l="12">
 	<mat-table [dataSource]="getLista()" matSort>
-		<ng-container *ngFor="let coluna of colunas" matColumnDef="{{coluna.atributo}}">
-			<div *ngIf="coluna.sorteada">
-				<mat-header-cell  *matHeaderCellDef mat-sort-header> {{coluna.valorCabecalho}} </mat-header-cell>
-			</div>
-			<div *ngIf="!coluna.sorteada">
-				<mat-header-cell *matHeaderCellDef> {{coluna.valorCabecalho}} </mat-header-cell>
-			</div>
-
-			<div *ngIf="coluna.template">
-				<mat-cell *matCellDef="let item; let indice = index">
-					<div [ngTemplateOutlet]="coluna.template" [ngTemplateOutletContext]="{item: item, indice:indice}"> </div>
+ 		<ng-container *ngFor="let coluna of colunas" matColumnDef="{{coluna.atributo}}">
+			
+			<div *ngIf="coluna.ehCheckbox">
+				<mat-header-cell *matHeaderCellDef>
+					<mdias-col l=12 m=12>
+						<mat-checkbox   (change)="$event ? mudarValorDeTodos(coluna.atributo) : null"
+										[checked]="selecionados.hasValue() && heTodosSelecionado()"
+										[indeterminate]="selecionados.hasValue() && !heTodosSelecionado()">
+						</mat-checkbox>
+					</mdias-col>
+				</mat-header-cell>
+				<mat-cell *matCellDef="let item">
+					<mdias-col l=12 m=12>
+						<mat-checkbox	(click)="$event.stopPropagation()"
+										(change)="$event ? mudarValorDoItem(item, coluna.atributo) : null;"
+										[checked]="selecionados.isSelected(item)">
+						</mat-checkbox>
+					</mdias-col>
 				</mat-cell>
 			</div>
-			<div *ngIf="!coluna.template">
-				<mat-cell *matCellDef="let item"> {{buscarValor(item,coluna.atributo)}} </mat-cell>
+
+
+			<div *ngIf="!coluna.ehCheckbox">
+				<div *ngIf="coluna.ordenavel">
+					<mat-header-cell  *matHeaderCellDef mat-sort-header> {{coluna.valorCabecalho}} </mat-header-cell>
+				</div>
+				
+				<div *ngIf="!coluna.ordenavel">
+					<mat-header-cell *matHeaderCellDef> {{coluna.valorCabecalho}} </mat-header-cell>
+				</div>
+				
+				<div *ngIf="coluna.template">
+					<mat-cell *matCellDef="let item; let indice = index">
+						<div [ngTemplateOutlet]="coluna.template" [ngTemplateOutletContext]="{item: item, indice:indice}"> </div>
+					</mat-cell>
+				</div>
+				<div *ngIf="!coluna.template">
+					<mat-cell *matCellDef="let item" matTooltip="{{coluna.tooltip ? buscarValor(item,coluna.atributo) : ''}}"> {{buscarValor(item,coluna.atributo)}} </mat-cell>
+				</div>
 			</div>
 		</ng-container>
 		<mat-header-row *matHeaderRowDef="listaCabecalho()"></mat-header-row>

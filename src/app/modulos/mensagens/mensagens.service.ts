@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/observable';
 import { Subject } from 'rxjs/Subject';
-import { Mensagem } from '../../modelo';
+import { Mensagem } from '../../modelo/mensagem';
 
 @Injectable()
-export class MensagensService {
+export class MdbMensageria {
 
   private mensagens:Mensagem[];
   private index:number;

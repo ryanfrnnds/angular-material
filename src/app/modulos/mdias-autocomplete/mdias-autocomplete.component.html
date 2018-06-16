@@ -2,22 +2,31 @@
     <input
         type="text" matInput  placeholder="{{label}}"
         [matAutocomplete]="autoComplete"
-        (focusout)="limparSeNaoPossuirSelecao()"
         [required] = "ehObrigatorio"
         [formControl]="controle"
+        [readonly]="readonly"
+        (focusout)="evento.focusout($event)"
+        (focus)="evento.focus($event)"
+        #input
     >
-    <mat-error  >{{errosAutoComplete(controle)}}</mat-error>
+    <mat-error >{{mostrarError(controle)}}</mat-error>
+    <!-- Necessário tirar pois esta dando BUG na versao 43 do FIREFOX!
+    <button mat-button *ngIf="controle.value" matSuffix mat-icon-button  (click)="evento.limpar($event)">
+            <mat-icon>close</mat-icon>
+    </button>
+    -->
     <mat-autocomplete
         #autoComplete="matAutocomplete" [displayWith]="display"
-        (optionSelected)= "_itemSelecionado($event)"
+        (optionSelected)= "evento.itemSelecionado($event)"
     >
         <mat-option
         *ngFor="let opcao of opcoes | async" [value]="opcao"
-        selected= "opcao[atributoDisplay] === itemAAA[atributoDisplay]"
         >
         {{ display(opcao) }}
         </mat-option>
     </mat-autocomplete>
 </mat-form-field>
+
+
 
 

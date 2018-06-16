@@ -8,3 +8,6 @@ export const provedorDatePicker = [
     {provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS}
   ];
 
+export const ROTA_INICIO = '/inicio';
+export const SERVIDOR = 'http://10.0.64.58:8080/monitorRH-rest';
+

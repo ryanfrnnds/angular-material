@@ -1,6 +1,10 @@
-import { MdbServico } from './../../modulos/servicos/mdb-servico';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { MDBLocalStorage, MDB } from '../../util/mdb';
+import { MdbMensageria } from '../../modulos/mensagens/mensagens.service';
+import { Router } from '@angular/router';
+import { MDBHttp } from '../../modulos/http/mdb-http';
+import { ACSPermissoes } from '../../modulos/acs/permissoes';
 
 @Component({
   selector: 'mdias-outra-pagina',
@@ -16,19 +20,24 @@ export class OutraPaginaComponent implements OnInit {
   @Input() public item: any;
 
   constructor(formBuilder: FormBuilder
-    , mdbServico: MdbServico) {
+  , private mensageria: MdbMensageria
+  , private rota: Router) {
       this.formReuniao = formBuilder.group({
         equipe: [null, Validators.required],
       });
 
-      mdbServico.get<Array<any>>('consulta/equipes').subscribe(equipes => {
+      MDB.servico.get<Array<any>>
+      (
+        new MDBHttp('consulta/equipes',ACSPermissoes.incluir)).subscribe(equipes => {
         this.equipes = equipes;
       });
+      console.log('SOU GERENTE?')
+      console.log(MDB.buscarValor(MDB, 'usuario.parametros.GERENTE'));
 
     }
 
   ngOnInit() {
-    
+
   }
 
   ngOnChanges(changes: SimpleChanges) {

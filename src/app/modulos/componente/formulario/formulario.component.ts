@@ -21,6 +21,8 @@ export class FormularioComponent implements OnInit {
   @Input() mensagemDialogCancelar: string;
 
   @Input() nomeLimpar: string;
+  @Input() tituloDialogLimpar: string;
+  @Input() mensagemDialogLimpar: string;
 
   @Input() desabilitarCancelar: boolean = false;
   @Input() desabilitarSalvar: boolean = false;

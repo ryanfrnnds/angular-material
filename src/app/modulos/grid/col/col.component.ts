@@ -10,6 +10,7 @@ export class ColComponent implements OnInit {
   @Input() s: string;
   @Input() m: string;
   @Input() l: string;
+  @Input() estilo: any;
 
   constructor() {
     this.s = this.s ? this.s : '12';

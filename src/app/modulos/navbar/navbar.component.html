@@ -7,7 +7,7 @@
   			<span class="nomeDoSistema">{{nomeDoSistema}}</span>
   		</a>
     </div>
-    
+
     <ul class="menu clearfix">
       <li *ngFor="let l1 of menu">
         <a *ngIf="!l1.menus" routerLink="/{{l1.url}}">{{l1.titulo}}</a>
@@ -41,12 +41,8 @@
       <div class="popover above">
         <span class="icone"><i class="material-icons">face</i></span>
         <div class="detalhe">
-          <span class="nome">{{servico.usuarioLogado?.nome}}</span>
-          <span class="matricula">{{servico.usuarioLogado?.codigo}}</span>
-          <!--
-            Implementar quando decidir o que fazer com o clique do SAIR! 
-          <span class="sair"><i class="material-icons">exit_to_app</i>Sair</span>
-          --> 
+          <span class="nome">{{nomeUsuario}}</span>
+          <span class="matricula">{{codigoUsuario}}</span>
         </div>
       </div>
     </div>

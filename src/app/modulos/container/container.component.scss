@@ -26,7 +26,6 @@
     box-sizing: border-box;
     display: flex;
     max-height: 100%;
-    place-content: center space-between;
     align-items: center;
     font-family: $font-titulo;
     height: 80px;
@@ -36,12 +35,15 @@
     margin: 0 auto;
     width: 90%;
     
+    .example-spacer {
+      flex: 1 1 auto;
+    }
+    
     .mat-raised-button {
     	background: $cor-principal-clara;
     	color: #fff;
-      font-family:  $font-titulo;
+      font-family: $font-titulo;
       font-size: 1rem;
-      margin-left: auto;
     }
 
     .nomeDaPagina {

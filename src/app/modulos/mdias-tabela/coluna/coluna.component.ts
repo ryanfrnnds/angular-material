@@ -10,7 +10,9 @@ export class ColunaComponent implements OnInit {
 
   @Input() atributo: string;
   @Input() valorCabecalho: string;
-  @Input() sorteada: boolean = false;
+  @Input() ordenavel: boolean = false;
+  @Input() tooltip: boolean = false;
+  @Input() ehCheckbox: boolean = false;
 
   @ContentChild(TemplateRef) template: TemplateRef<any>;
   

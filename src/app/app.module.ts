@@ -1,3 +1,4 @@
+import { MdiasAppModule } from './modulos/mdias-app/mdias-app.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -12,7 +13,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InicioComponent } from './inicio/inicio.component';
 
 import { provedorDatePicker } from './app.const';
-import { MdbServico } from './modulos/servicos/mdb-servico';
 import { AutenticacaoComponent } from './modulos/seguranca/autenticacao/autenticacao.component';
 import { MdbHttpInterceptor } from './modulos/seguranca/interceptador/mdb-http-interceptor';
 
@@ -37,7 +37,8 @@ import {
 import { CompartilhadoModule} from '../app/compartilhados/compartilhado.module';
 import {AcessoAutenticado } from '../app/modulos/seguranca/guarda-rotas/acesso-autenticado';
 import { OutraPaginaComponent } from './inicio/outra-pagina/outra-pagina.component';
-import { MdiasAppModule } from '../../public_api';
+import { MdbHttpServico } from './modulos/http/mdb-http.servico';
+import { MdbAcsServico } from './modulos/acs/servico';
 
 
 @NgModule({
@@ -58,13 +59,14 @@ import { MdiasAppModule } from '../../public_api';
             MatAutocompleteModule,
             MdiasAppModule
           ],
-  providers: [MdbServico, AcessoAutenticado,
+  providers: [
+    MdbHttpServico,
+    AcessoAutenticado,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MdbHttpInterceptor,
       multi: true
-    }
-
+    },MdbAcsServico
   ],
   bootstrap: [AppComponent]
 })

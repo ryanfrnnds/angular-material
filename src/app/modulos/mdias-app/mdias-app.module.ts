@@ -14,6 +14,7 @@ import{ FooterModule } from './../footer/footer.module';
     MatSidenavModule
   ],
   declarations: [MdiasAppComponent],
-  exports:[MdiasAppComponent]
+  exports:[MdiasAppComponent],
+  providers: []
 })
 export class MdiasAppModule { }

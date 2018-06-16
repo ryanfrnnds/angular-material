@@ -6,19 +6,12 @@ export class I18n {
 
     private constructor() {}
 
-    public static Instance(http: HttpClient = null , emUso: string = null): I18n {
+    public static Instance(emUso: string = null): I18n {
         if (this.singleton == null) {
             this.singleton = new I18n();
         }
-        if (http) {
-            const referenciaLingua: string = emUso ? emUso : 'pt-BR';
-            this.singleton.traducao = this.Instance().getTraducoesGerais(referenciaLingua);
-            http.get<any>('assets/i18n/' + referenciaLingua + '.json').subscribe( (traducao) => {
-              if (traducao) {
-                this.Instance().traducao = Object.assign(this.Instance().traducao, traducao);
-              }
-            });
-        }
+        const referenciaLingua: string = emUso ? emUso : 'pt-BR';
+        this.singleton.traducao = this.singleton.getTraducoesGerais(referenciaLingua);
         return this.singleton;
     }
 
@@ -47,21 +40,39 @@ export class I18n {
                 'dataAtualizacao' : 'Data atualização',
                 'ativo' : 'Ativo',
                 'acoes' : 'Ações',
-                'nome': 'nome'
+                'nome': 'Nome'
             },
             'erro': {
-                'obrigatoriedade' : 'Campo obrigatório'
+                'obrigatoriedade' : 'Campo obrigatório',
+                'semValorSelecionado' : 'Escolha um item da lista'
             },
             'operacao' : {
                 'cancelar' : 'Cancelar',
                 'salvar' : 'Salvar',
-                'mensagemGeral' : 'Confirma operação?'
+                'atualizar' : 'Atualizar',
+                'mensagemGeral' : 'Confirma operação?',
+                'sucesso' : {
+                    'salvar' : 'Salvo com sucesso',
+                    'editar' : 'Atualizado com sucesso',
+                    'excluir' : 'Excluído com sucesso'
+                },
+                'busca':{
+                  'sucesso':'Registros recuperados com sucesso',
+                  'erro': 'Não foi possível recuperar os registros'
+                },
+                'formulario': {
+                  'erro': 'Verifique campo(s) obrigatório(s)'
+                }
             },
             'autoComplete': {
                 'itensPorPagina': 'Itens por página',
                 'proximaPagina': 'Proxima página',
                 'paginaAnterior':'Página anterior',
                 'de': 'de'
+            }
+            ,'permissao': {
+                'semAcesso': 'Usuário não possui acesso a função',
+                'semFuncaoConfigurada': 'A tela não possui função configurada'
             }
           }
       };

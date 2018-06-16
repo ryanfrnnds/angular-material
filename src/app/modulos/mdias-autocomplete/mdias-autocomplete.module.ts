@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MdiasAutocompleteComponent } from './mdias-autocomplete.component';
-import { MatAutocompleteModule, MatInputModule, MatPaginatorIntl } from '@angular/material';
+import { MatAutocompleteModule, MatInputModule, MatPaginatorIntl, MatIconModule, MatButtonModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdiasProvedorPaginacao } from './provedores/mdias-provedor-paginacao';
 
@@ -12,6 +12,8 @@ import { MdiasProvedorPaginacao } from './provedores/mdias-provedor-paginacao';
     , ReactiveFormsModule
     , MatInputModule
     , MatAutocompleteModule  
+    , MatIconModule
+    , MatButtonModule
   ]
   , declarations: [MdiasAutocompleteComponent]
   , exports: [MdiasAutocompleteComponent]

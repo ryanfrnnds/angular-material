@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MenuItem } from '../../modelo';
 
 @Component({
   selector: 'mdias-app',
@@ -8,12 +7,10 @@ import { MenuItem } from '../../modelo';
 })
 export class MdiasAppComponent implements OnInit {
 
-  @Input() nomeDoSistema: string;
   @Input() logoImg: string;
   @Input() logoIcone: string;
-  @Input() menu: MenuItem[];
   @Input() anoReferencia:string;
-  
+
   constructor() { }
 
   ngOnInit() {

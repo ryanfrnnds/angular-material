@@ -1,69 +1,33 @@
-<!--
-<mdias-container nomeDaPagina="Início" icone="home" valorBotaoNovo="novo" rotaBotaoNovo="autenticar">
+<!--<mdias-container nomeDaPagina="Início" icone="home" valorBotaoNovo="novo" rotaBotaoNovo="outraPagina">
 
-  <mdias-titulo valor="PESQUISAR"></mdias-titulo>
-  <mdias-tabela [lista]="lista" ehPaginado=true itensPorPagina=10>
-    <mdias-coluna cabecalho="Nome" valor="nome"></mdias-coluna>
-    <mdias-coluna cabecalho="CPF" valor="cpf"></mdias-coluna>
-    <mdias-coluna cabecalho="Nascimento" valor="nascimento"></mdias-coluna>
-    <mdias-coluna cabecalho="Ativo" >
-      <ng-template let-item="item" >
-        <i class="material-icons" *ngIf="item.ativo">done</i>
-        <i class="material-icons" *ngIf="!item.ativo">close</i>
-      </ng-template>
-    </mdias-coluna>
-    <mdias-coluna cabecalho="Ações" >
-        <ng-template let-item="item" >
-            <mdias-botao-menu>
-              <mdias-botao-menu-item icone="visibility" valor="Visualizar" ></mdias-botao-menu-item>
-              <mdias-botao-menu-item icone="create" valor="Editar" ></mdias-botao-menu-item>
-              <mdias-botao-menu-item icone="delete_forever" valor="Excluir" tituloDialog="Confirma a exclusão?" confirmacao="true" titulo="Excluir" (clique)="carregarItensNaLista()"></mdias-botao-menu-item>
-            </mdias-botao-menu>
-        </ng-template>
-      </mdias-coluna>
-  </mdias-tabela>
+  <form *ngIf="mdbServico.ehPermitidoExclusao('MNT0001')" class="form-horizontal" [formGroup]="formulario" (submit)="false">
+      <div  formGroupName="geral">
 
+      <mdias-col l="6" m="6">
+          <mdias-autocomplete
+          [controle] = "formulario.get('geral').get('parametroPai')"
+          [atributoDisplay] = "'descricao'"
+          [ehObrigatorio] = true
+          [label] ="'Parametro PAI'"
+          [lista] = "listaParametroPai"
+          (itemSelecionado) = "parametroPaiSelecionado($event)"
+        >
+          </mdias-autocomplete>
+      </mdias-col>
 
-  <mdias-acoes>
-    <mdias-botao icone="bug_report" mini="true" (clique)="abrirModal()"></mdias-botao>
-  </mdias-acoes>
-
-
-  <mdias-outra-pagina
-    [item]="item"
-  >
-
-  </mdias-outra-pagina>
-
-  <form class="form-horizontal" [formGroup]="formulario" (submit)="false">
-    <div  formGroupName="geral">
       <mdias-col l="6" m="6">
         <mdias-autocomplete
-        [controle] = "formulario.get('geral').get('parametroPai')"
+        [controle] = "formulario.get('geral').get('codigoPai')"
         [atributoDisplay] = "'descricao'"
         [ehObrigatorio] = false
-        [label] ="'Parametro PAI'"
-        [lista] = "listaParametroPai"
-        (itemSelecionado) = "parametroPaiSelecionado($event)"
-       >
+        [label] ="'Codigo PAI'"
+        [lista] = "listaCodigoPai"
+        [dependentes] = "[formulario.get('geral').get('parametroPai')]"
+      >
         </mdias-autocomplete>
-    </mdias-col>
-    
-    <mdias-col l="6" m="6">
-      <mdias-autocomplete
-      [controle] = "formulario.get('geral').get('codigoPai')"
-      [atributoDisplay] = "'descricao'"
-      [ehObrigatorio] = false
-      [label] ="'Codigo PAI'"
-      [lista] = "listaCodigoPai"
-      [dependentes] = "[formulario.get('geral').get('parametroPai')]"
-     >
-      </mdias-autocomplete>
-    </mdias-col> 
-    </div>
-</form>
-
- 
+      </mdias-col>
+      </div>
+  </form>
 
 </mdias-container>
 
@@ -86,26 +50,32 @@
   </mdias-acoes>
 </mdias-modal>
 -->
-<mdias-container nomeDaPagina="Início" icone="home" valorBotaoNovo="novo" rotaBotaoNovo="autenticar">
+<mdias-container nomeDaPagina="Início" icone="home" valorBotaoNovo="novo" rotaBotaoNovo="outraPagina">
   <mdias-tabela
-    *ngIf="true"
-    
-    [totalDeItens]="3"
+    [totalDeItens]="1"
     [ehPaginado]="true"
-    [itensPorPagina]="1"
-    [ehLazy]="true"
+    [itensPorPagina]="4"
+    [ehLazy]="false"
     (onLazy)= "teste($event)"
-    [lista] = "listaTabela"
+    [lista] = "listaTabela" 
   >
     <mdias-coluna
+    [valorCabecalho] = "''"
+    [ehCheckbox] = "true"
+    [atributo] = "'selecionado'" 
+    >
+    </mdias-coluna>
+
+    <mdias-coluna
     [valorCabecalho] = "'Nome'"
-    [sorteada] = "true"
+    [ordenavel] = "true"
     [atributo] = "'nome'"
     >
     </mdias-coluna>
+
     <mdias-coluna
     [valorCabecalho] = "'Criado Por'"
-    [sorteada] = "true"
+    [ordenavel] = "true"
     [atributo] = "'criadoPor'"
     >
     </mdias-coluna>

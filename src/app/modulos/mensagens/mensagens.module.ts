@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MensagensComponent } from './mensagens.component';
-import { MensagensService } from './mensagens.service';
+import { MdbMensageria } from './mensagens.service';
 
 @NgModule({
   imports: [
@@ -9,7 +9,7 @@ import { MensagensService } from './mensagens.service';
   ],
   declarations: [MensagensComponent],
   providers: [
-    MensagensService
+    MdbMensageria
   ],
   exports: [MensagensComponent]
 })

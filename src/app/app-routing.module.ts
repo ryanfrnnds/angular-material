@@ -11,10 +11,10 @@ import { OutraPaginaComponent } from './inicio/outra-pagina/outra-pagina.compone
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: 'autenticar', component: AutenticacaoComponent },
-  { path: 'inicio', component: InicioComponent },
-  { path: 'outraPagina', component: OutraPaginaComponent }
+  { path: 'inicio', component: InicioComponent, canActivate: [AcessoAutenticado]},
+  { path: 'outraPagina', component: OutraPaginaComponent},
+  { path: '**', redirectTo: 'inicio', pathMatch: 'full'}
 ];
 
 @NgModule({
