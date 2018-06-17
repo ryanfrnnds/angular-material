@@ -1,55 +1,3 @@
-<!--<mdias-container nomeDaPagina="Início" icone="home" valorBotaoNovo="novo" rotaBotaoNovo="outraPagina">
-
-  <form *ngIf="mdbServico.ehPermitidoExclusao('MNT0001')" class="form-horizontal" [formGroup]="formulario" (submit)="false">
-      <div  formGroupName="geral">
-
-      <mdias-col l="6" m="6">
-          <mdias-autocomplete
-          [controle] = "formulario.get('geral').get('parametroPai')"
-          [atributoDisplay] = "'descricao'"
-          [ehObrigatorio] = true
-          [label] ="'Parametro PAI'"
-          [lista] = "listaParametroPai"
-          (itemSelecionado) = "parametroPaiSelecionado($event)"
-        >
-          </mdias-autocomplete>
-      </mdias-col>
-
-      <mdias-col l="6" m="6">
-        <mdias-autocomplete
-        [controle] = "formulario.get('geral').get('codigoPai')"
-        [atributoDisplay] = "'descricao'"
-        [ehObrigatorio] = false
-        [label] ="'Codigo PAI'"
-        [lista] = "listaCodigoPai"
-        [dependentes] = "[formulario.get('geral').get('parametroPai')]"
-      >
-        </mdias-autocomplete>
-      </mdias-col>
-      </div>
-  </form>
-
-</mdias-container>
-
-
-<mdias-modal titulo="Teste" [ativo]="onModal">
-  <mdias-col>b</mdias-col>
-  <mdias-col>c</mdias-col>
-  <mdias-col>d</mdias-col>
-  <mdias-col>b</mdias-col>
-  <mdias-col>b</mdias-col>
-  <mdias-col>c</mdias-col>
-  <mdias-col>d</mdias-col>
-  <mdias-col>b</mdias-col>
-  <mdias-col>b</mdias-col>
-  <mdias-col>c</mdias-col>
-  <mdias-col>d</mdias-col>
-  <mdias-col>b</mdias-col>
-  <mdias-acoes>
-    <mdias-botao valor="Fechar Modal" (clique)="fecharModal()"></mdias-botao>
-  </mdias-acoes>
-</mdias-modal>
--->
 <mdias-container nomeDaPagina="Início" icone="home" valorBotaoNovo="novo" rotaBotaoNovo="outraPagina">
   <mdias-tabela
     [totalDeItens]="1"
@@ -91,8 +39,6 @@
     </ng-template>
     </mdias-coluna>
   </mdias-tabela>
-  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  {{traduzir('teste')}}
 </mdias-container>
 
 
