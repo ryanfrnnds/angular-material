@@ -36,10 +36,10 @@ export class AutenticacaoComponent implements OnInit, AfterViewInit {
           MDB.contexto(contexto);
           MDB.servico.get<Array<MenuItem>>(new MDBHttp('menu/listar',ACSPermissoes.livre, {mostraError : false})).subscribe(menus => {
             contexto.menu = menus;
-            MDB.contexto(contexto);
+            MDB.contexto(contexto);//SUCESSO
             MDB.irParaInicio(this.rota);
           }, httpError => {
-            MDB.contexto(contexto);
+            MDB.contexto(contexto);//ERRO
             MDB.decidirRota(TipoResposta.SEM_MENU_ACS);
           });
         }, httpError => {

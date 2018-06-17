@@ -14,6 +14,7 @@ import {MatToolbarModule,
         MatMenuModule,
         MatTabsModule,
         MatDatepickerModule,
+        MatAutocompleteModule,
 } from '@angular/material';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,6 +32,12 @@ import { BotaoMenuModule } from './../modulos/botao/botao-menu/botao-menu.module
 import { BotaoMenuItemModule } from './../modulos/botao/botao-menu-item/botao-menu-item.module';
 import { MdiasAutocompleteModule } from '../modulos/mdias-autocomplete/mdias-autocomplete.module';
 import { MdiasTabelaModule } from '../modulos/mdias-tabela/mdias-tabela.module';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from '../app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { MdiasAppModule, AutenticaoModule } from '../../../public_api';
 
   @NgModule({
     exports: [
@@ -64,7 +71,15 @@ import { MdiasTabelaModule } from '../modulos/mdias-tabela/mdias-tabela.module';
           FormularioModule,
           CardModule,
           MdiasAutocompleteModule, 
-          MdiasTabelaModule
+          MdiasTabelaModule,
+          RouterModule,
+          AppRoutingModule,
+          BrowserModule,
+          BrowserAnimationsModule,
+          HttpClientModule,
+          MatAutocompleteModule,
+          MdiasAppModule,
+          AutenticaoModule
           ]
   })
   export class CompartilhadoModule { }

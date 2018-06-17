@@ -19,10 +19,8 @@ export class OutraPaginaComponent implements OnInit {
 
   @Input() public item: any;
 
-  constructor(formBuilder: FormBuilder
-  , private mensageria: MdbMensageria
-  , private rota: Router) {
-      this.formReuniao = formBuilder.group({
+  constructor() {
+      this.formReuniao = MDB.formBuilder.group({
         equipe: [null, Validators.required],
       });
 

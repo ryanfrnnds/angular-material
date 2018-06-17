@@ -122,6 +122,7 @@ export class MDBComponente {
   }
 
   public traduzir(chave: string , parametros: any = null): string {
+    console.log(MDB.traduzir(chave,parametros));
     return MDB.traduzir(chave,parametros);
   }
 

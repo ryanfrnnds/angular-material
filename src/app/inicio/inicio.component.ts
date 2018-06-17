@@ -7,6 +7,7 @@ import { MdiasModalComponent } from '../modulos/mdias-modal/mdias-modal.componen
 import { MdbMensageria } from '../modulos/mensagens/mensagens.service';
 import * as _moment from 'moment';
 import { Router } from '@angular/router';
+import { MDBComponente, MDB } from '../../../public_api';
 const moment =  _moment;
 
 class ParametroPai {
@@ -22,7 +23,7 @@ class CodigoPai {
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.scss']
 })
-export class InicioComponent implements OnInit, AfterViewInit {
+export class InicioComponent extends MDBComponente implements OnInit, AfterViewInit {
 
   public lista:any[];
 
@@ -47,21 +48,19 @@ export class InicioComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(public rota: Router
-    , public formBuilder: FormBuilder
-  ) {
+  constructor() {
+    super();
     this.lista = [];
-    const geral = this.formBuilder.group({
+    const geral = MDB.formBuilder.group({
       nome: [null, [Validators.required, Validators.pattern('^[A-Z]+$')]],
       descricao: [null, [Validators.required, Validators.pattern('^[A-Z]+$')]],
       ativo: [true],
       parametroPai: [null, [Validators.required]],
       codigoPai: [null],
     });
-    this.formulario = this.formBuilder.group({
+    this.formulario = MDB.formBuilder.group({
       geral: geral
     });
-
   }
 
   pesquisar() {
@@ -101,7 +100,7 @@ export class InicioComponent implements OnInit, AfterViewInit {
   }
 
   public irPara() {
-    this.rota.navigateByUrl('/outraPagina');
+    MDB.rota.navigateByUrl('/outraPagina');
   }
 
 

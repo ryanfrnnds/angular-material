@@ -13,9 +13,7 @@ import { MdbAcsServico } from './modulos/acs/servico';
 
 const routes: Routes = [
   { path: 'autenticar', component: AutenticacaoComponent },
-  { path: 'inicio', component: InicioComponent, canActivate: [AcessoAutenticado, MdbAcsServico], data: { 
-    funcoes: ['MNT0001']
-    }
+  { path: 'inicio', component: InicioComponent
   },
   { path: 'outraPagina', component: OutraPaginaComponent},
   { path: '**', redirectTo: 'inicio', pathMatch: 'full'}

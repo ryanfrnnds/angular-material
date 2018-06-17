@@ -62,6 +62,7 @@ export class MDB {
       if(dependencias){
         this.singleton.traducao = I18n.Instance(dependencias.contexto.confI18n).traducao;
         const referenciaLingua: string = dependencias.contexto.confI18n ? dependencias.contexto.confI18n : 'pt-BR';
+
         this.singleton.inciado = dependencias.angular.http.get<any>('assets/i18n/' + referenciaLingua + '.json').map( (traducao) => {
           if (traducao) {
             Object.assign(this.singleton.traducao, traducao);
@@ -80,6 +81,7 @@ export class MDB {
       if(!MDB.possuiLoguin()) {
         this.singleton.rota.navigateByUrl(this.singleton.rotaInicio);
       }
+      this.singleton.inciado.subscribe();
       return this.singleton;
 	}
 
