@@ -73,8 +73,8 @@ export class MdiasAutocompleteComponent implements OnInit {
 
   private mostrarError(control: AbstractControl) {
     const traducao = I18n.Instance().traducao;
-    const obrigatorio = MDB.buscarValor(traducao, 'mdbComponentes.erro.obrigatoriedade');
-    const semValor = MDB.buscarValor(traducao, 'mdbComponentes.erro.semValorSelecionado');
+    const obrigatorio = MDB.util.buscarValor(traducao, 'mdbComponentes.erro.obrigatoriedade');
+    const semValor = MDB.util.buscarValor(traducao, 'mdbComponentes.erro.semValorSelecionado');
    
     if(control.hasError('required')) {
       return obrigatorio;
@@ -108,8 +108,8 @@ export class MdiasAutocompleteComponent implements OnInit {
         });
       }
       this.opcoes = this._controle.valueChanges.pipe( startWith<any>(''),
-          map(item => typeof item === 'string' ? item : item ? MDB.buscarValor(item, this.atributoDisplay) : '')
-          , map( (texto: string) => texto ? this.filtro(lista, texto) : this.filtro(lista,  MDB.buscarValor(this._controle.value, this.atributoDisplay) ))
+          map(item => typeof item === 'string' ? item : item ? MDB.util.buscarValor(item, this.atributoDisplay) : '')
+          , map( (texto: string) => texto ? this.filtro(lista, texto) : this.filtro(lista,  MDB.util.buscarValor(this._controle.value, this.atributoDisplay) ))
           , map( (lista: any[]) => {
             lista.forEach((element: any) => {
               element.display = element[this.atributoDisplay];
@@ -127,7 +127,7 @@ export class MdiasAutocompleteComponent implements OnInit {
   public filtro<T>(lista, comparacao: string): T[] {
     if (comparacao) {
       return lista.filter(option =>
-        MDB.buscarValor(option, this.atributoDisplay).toLowerCase().includes(comparacao.toLowerCase()));
+        MDB.util.buscarValor(option, this.atributoDisplay).toLowerCase().includes(comparacao.toLowerCase()));
     } else {
       return lista.slice();
     }

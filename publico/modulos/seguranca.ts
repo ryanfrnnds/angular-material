@@ -1,7 +1,8 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MdbHttpInterceptor } from '../../src/app/modulos/seguranca/interceptador/mdb-http-interceptor';
+export * from '../../src/app/modulos/seguranca/autenticacao/mdb-autenticacao.module';
+export * from '../../src/app/modulos/seguranca/autenticacao/mdb-autenticacao.servico';
 
-export * from '../../src/app/modulos/seguranca/guarda-rotas/acesso-autenticado';
-export * from '../../src/app/modulos/seguranca/interceptador/mdb-http-interceptor';
-export * from '../../src/app/modulos/seguranca/autenticacao/autenticacao.module';
-export * from '../../src/app/modulos/seguranca/autenticacao/autenticacao.component';
+export * from '../../src/app/modulos/acs/acesso-grupo';
+export * from '../../src/app/modulos/acs/mdb-acs';
+export * from '../../src/app/modulos/acs/permissoes';
+export * from '../../src/app/modulos/acs/servico';
+

@@ -4,16 +4,18 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { InicioComponent } from './inicio/inicio.component';
-import { AcessoAutenticado } from './modulos/seguranca/guarda-rotas/acesso-autenticado';
-import { AutenticacaoComponent } from '../app/modulos/seguranca/autenticacao/autenticacao.component';
+import { MDBAutenticacaoComponent } from '../app/modulos/seguranca/autenticacao/mdb-autenticacao.component';
 import { OutraPaginaComponent } from './inicio/outra-pagina/outra-pagina.component';
 import { MdbAcsServico } from './modulos/acs/servico';
+import { MdbAutenticacaoServico } from './modulos/seguranca/autenticacao/mdb-autenticacao.servico';
 
 
 
 const routes: Routes = [
-  { path: 'autenticar', component: AutenticacaoComponent },
-  { path: 'inicio', component: InicioComponent
+  { path: 'autenticar', component: MDBAutenticacaoComponent },
+  { path: 'inicio', component: InicioComponent, canActivate: [MdbAutenticacaoServico, MdbAcsServico], data: { 
+    funcoes: ['MNT0001','MNT0002']
+    }
   },
   { path: 'outraPagina', component: OutraPaginaComponent},
   { path: '**', redirectTo: 'inicio', pathMatch: 'full'}

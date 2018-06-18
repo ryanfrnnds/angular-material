@@ -1,6 +1,5 @@
 export * from '../../src/app/modulos/componente/filtro/filtro.module';
 export * from '../../src/app/modulos/componente/filtro/filtro.component';
-export * from '../../src/app/util/mdb-componente';
 export * from '../../src/app/modulos/componente/formulario/formulario.module';
 export * from '../../src/app/modulos/componente/formulario/formulario.component';
 

@@ -2,16 +2,16 @@ import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MdbMensageria } from '../mensagens/mensagens.service';
+import { MdbMensagemServico } from '../mensagens/mensagens.service';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { MDB, MDBLocalStorage } from '../../util/mdb';
-import { MensagemOperacao } from '../servicos/mdb-mensagem-operacao';
 import { ACSPermissoes } from '../acs/permissoes';
 import { MDBHttp } from './mdb-http';
+import { MdbMensagemHttp } from './mdb-mensagem-http';
 
 @Injectable()
 export class MdbHttpServico {
@@ -21,7 +21,7 @@ export class MdbHttpServico {
     }
 
   constructor(private http: HttpClient
-              , private servicoMensagem:MdbMensageria
+              , private servicoMensagem:MdbMensagemServico
               , private rota: Router
             ) {}
 
@@ -73,7 +73,7 @@ export class MdbHttpServico {
     }
 
     public salvar(ehEdicao: boolean, opcoes:MDBHttp, entidade: any ): Observable<any> {
-        const traducao = MDB.traducao.mdbComponentes;
+        const traducao = MDB.util.traducao.mdbComponentes;
         const mensagem = this.prepararMensagem(opcoes.mensagem, ehEdicao);
         opcoes.url =  opcoes.url + '/salvar';
         opcoes.nivelAcs = ehEdicao ? ACSPermissoes.alterar : ACSPermissoes.incluir;
@@ -88,7 +88,7 @@ export class MdbHttpServico {
     }
 
     public salvarLista<T>(ehEdicao: boolean, opcoes:MDBHttp, lista: Array<T>): Observable<any> {
-        const traducao = MDB.traducao.mdbComponentes;
+        const traducao = MDB.util.traducao.mdbComponentes;
         const mensagem = this.prepararMensagem(opcoes.mensagem);
         opcoes.url =  opcoes.url + '/salvar-lista';
         opcoes.nivelAcs = ehEdicao ? ACSPermissoes.alterar : ACSPermissoes.incluir;
@@ -172,8 +172,8 @@ export class MdbHttpServico {
         });;
     }
 
-    private prepararMensagem(mensagem: MensagemOperacao , ehEdicao: boolean = false) {
-        const traducao = MDB.traducao.mdbComponentes;
+    private prepararMensagem(mensagem: MdbMensagemHttp , ehEdicao: boolean = false) {
+        const traducao = MDB.util.traducao.mdbComponentes;
         mensagem.sucesso = mensagem.sucesso ? mensagem.sucesso : traducao.operacao.sucesso.salvar;
         if (ehEdicao) {
             mensagem.sucesso =  traducao.operacao.sucesso.editar;

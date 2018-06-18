@@ -16,26 +16,26 @@ export class NavbarComponent implements OnInit {
   @Input() icone: string;
 
   get nomeDoSistema(): string {
-    return MDB.nomeSistema;
+    return MDB.contexto.nomeSistema;
   }
 
   get nomeUsuario() {
-    if(MDB.usuario) {
-      return MDB.usuario.nome;
+    if(MDB.contexto.browser) {
+      return MDB.contexto.browser.usuario.nome;
     }
     return '';
   }
 
   get codigoUsuario() {
-    if(MDB.usuario) {
-      return MDB.usuario.codigo;
+    if( MDB.contexto.browser) {
+      return  MDB.contexto.browser.usuario.codigo;
     }
     return '';
   }
 
   get menu(): MenuItem[] {
-    if(MDB.menu) {
-      return MDB.menu;
+    if(MDB.contexto.browser) {
+      return MDB.contexto.browser.menu;
     } else {
       return [];
     }

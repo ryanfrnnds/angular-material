@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { MdbMensageria } from './mensagens.service';
+import { MdbMensagemServico } from './mensagens.service';
 
 describe('MensagensService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [MdbMensageria]
+      providers: [MdbMensagemServico]
     });
   });
 
-  it('should be created', inject([MdbMensageria], (service: MdbMensageria) => {
+  it('should be created', inject([MdbMensagemServico], (service: MdbMensagemServico) => {
     expect(service).toBeTruthy();
   }));
 });

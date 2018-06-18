@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { Mensagem } from '../../modelo/mensagem';
 
 @Injectable()
-export class MdbMensageria {
+export class MdbMensagemServico {
 
   private mensagens:Mensagem[];
   private index:number;

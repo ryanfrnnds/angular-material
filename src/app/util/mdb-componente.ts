@@ -13,7 +13,7 @@ export class MDBComponente {
   public ehCarregando: boolean = false;
 
   public traducao() {
-    return MDB.traducao;
+    return MDB.util.traducao;
   }
 
   constructor() {}
@@ -61,10 +61,10 @@ export class MDBComponente {
   }
 
   public navegarPara(path) {
-    MDB.rotaAtiva.url.subscribe(urlSegment => {
+    MDB.angular.activatedRoute.url.subscribe(urlSegment => {
       const pathDeSaida = this.formarUrl(urlSegment);
-      const idConfig: number = MDB.rota.config.findIndex(rota => rota.path === pathDeSaida);
-      MDB.rota.navigate([path], {queryParams : {idConfigRota: idConfig}});
+      const idConfig: number = MDB.angular.router.config.findIndex(rota => rota.path === pathDeSaida);
+      MDB.angular.router.navigate([path], {queryParams : {idConfigRota: idConfig}});
     });
   }
 
@@ -101,7 +101,7 @@ export class MDBComponente {
     }
 
   public error(control: AbstractControl, error: string = 'required', msgError: string = 'mdbComponentes.erro.obrigatoriedade') {
-    return control.hasError(error) ? MDB.traduzir(msgError) : '';
+    return control.hasError(error) ? MDB.util.traduzir(msgError) : '';
   }
 
   public edicaoEmLista( lista, indice) {
@@ -122,8 +122,7 @@ export class MDBComponente {
   }
 
   public traduzir(chave: string , parametros: any = null): string {
-    console.log(MDB.traduzir(chave,parametros));
-    return MDB.traduzir(chave,parametros);
+    return MDB.util.traduzir(chave,parametros);
   }
 
   public pesquisar(formulario: AbstractControl = null) {
@@ -142,16 +141,16 @@ export class MDBComponente {
   }
 
   public mostrarSucesso(mensagem: string = null, pathRota:string = null) {
-    mensagem =  mensagem ? mensagem : MDB.traduzir('mdbComponentes.operacao.sucesso.salvar');
-    MDB.mensageria.addSucesso('',mensagem);
+    mensagem =  mensagem ? mensagem : MDB.util.traduzir('mdbComponentes.operacao.sucesso.salvar');
+    MDB.servicos.mensagem.addSucesso('',mensagem);
     if(pathRota){
-      MDB.rota.navigate([pathRota]);
+      MDB.angular.router.navigate([pathRota]);
     }
   }
 
   public mostrarError(httpError, mensagem: string = null) {
     const tituloError = '';
-    const mensagemError = mensagem ? mensagem : MDB.buscarValor(httpError, 'error.mensagem');
-    MDB.mensageria.addErro(tituloError,mensagemError);
+    const mensagemError = mensagem ? mensagem : MDB.util.buscarValor(httpError, 'error.mensagem');
+    MDB.servicos.mensagem.addErro(tituloError,mensagemError);
   }
 }

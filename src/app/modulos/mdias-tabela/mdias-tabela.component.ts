@@ -151,7 +151,7 @@ export class MdiasTabelaComponent implements OnInit {
   }
 
   private buscarValor(item: any, atributo: string) {
-    return MDB.buscarValor(item, atributo);
+    return MDB.util.buscarValor(item, atributo);
   }
 
 }

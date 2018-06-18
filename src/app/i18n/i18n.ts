@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 
 export class I18n {
     private static singleton: I18n = null;
