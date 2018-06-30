@@ -10,11 +10,11 @@ import { trigger,style,transition,animate,keyframes,query,stagger } from '@angul
       'modalAnimation', [
         transition(':enter', [
           style({top: '100%', opacity: 0}),
-          animate('500ms', style({top: '10%', opacity: 1}))
+          animate('300ms', style({top: '10%', opacity: 1}))
         ]),
         transition(':leave', [
           style({top: '10%', opacity: 1}),
-          animate('300ms', style({top: '-20%', opacity: 0}))
+          animate('200ms', style({top: '-20%', opacity: 0}))
         ])
       ]
     ),

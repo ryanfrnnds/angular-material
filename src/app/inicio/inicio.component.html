@@ -1,14 +1,16 @@
+{{util.traduzir('titulo.ti.t')}}
 <mdias-container nomeDaPagina="Início" icone="home" valorBotaoNovo="novo" rotaBotaoNovo="outraPagina">
   <mdias-tabela
     [totalDeItens]="1"
     [ehPaginado]="true"
     [itensPorPagina]="4"
     [ehLazy]="false"
-    (onLazy)= "teste($event)"
     [lista] = "listaTabela" 
+    (selecionarUm)= "testeUm()"
+    (selecionarTodos) = "testeTodos()"
   >
     <mdias-coluna
-    [valorCabecalho] = "''"
+    [valorCabecalho] = "'Ativo'"
     [ehCheckbox] = "true"
     [atributo] = "'selecionado'" 
     >

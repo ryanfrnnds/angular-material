@@ -1,10 +1,9 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { MDBLocalStorage, MDB } from '../../util/mdb';
+import { MDB } from '../../util/mdb';
 import { MdbMensagemServico } from '../../modulos/mensagens/mensagens.service';
 import { Router } from '@angular/router';
 import { MDBHttp } from '../../modulos/http/mdb-http';
-import { ACSPermissoes } from '../../modulos/acs/permissoes';
 
 @Component({
   selector: 'mdias-outra-pagina',
@@ -26,13 +25,13 @@ export class OutraPaginaComponent implements OnInit {
         equipe: [null, Validators.required],
       });
 
-      MDB.servicos.http.get<Array<any>>
+      MDB.servicos().http.get
       (
-        new MDBHttp('consulta/equipes',ACSPermissoes.incluir)).subscribe(equipes => {
-        this.equipes = equipes;
+        new MDBHttp('consulta/equipes')).subscribe(equipes => {
+        // this.equipes = equipes;
       });
       console.log('SOU GERENTE?')
-      console.log(MDB.util.buscarValor(MDB, 'usuario.parametros.GERENTE'));
+      console.log(MDB.util().buscarValor(MDB, 'usuario.parametros.GERENTE'));
 
     }
 

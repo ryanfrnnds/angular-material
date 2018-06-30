@@ -7,10 +7,12 @@ import { FormBuilder } from '@angular/forms';
 import { I18n } from '../i18n';
 import { TipoResposta } from '../modulos/http/tipo-resposta';
 
-import { Observable } from 'rxjs/Observable';
-import { MDBHttp } from '../modulos/http/mdb-http';
-import { ACSPermissoes } from '../modulos/acs/permissoes';
+import { Observable ,  SubscriptionLike as ISubscription } from 'rxjs';
+
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
+import { timer } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export class MDB {
   private static singleton: MDB = null;
@@ -19,7 +21,9 @@ export class MDB {
   private _util: Util;
   private _servicos: Servicos;
 
-  private inciado: Observable<boolean>;
+  public static mostrarConteudo: boolean = true;
+
+  public static inciado: Observable<boolean> = null;
 
 	private constructor() {}
 
@@ -28,94 +32,110 @@ export class MDB {
       {
         angular:
           {
-            router: Router, 
-            activatedRoute: ActivatedRoute, 
-            formBuilder: FormBuilder
+            router: Router,
+            activatedRoute: ActivatedRoute,
+            formBuilder: FormBuilder,
+            location: Location
           }
         ,servicos:
           {
-            mensagem: MdbMensagemServico, 
+            mensagem: MdbMensagemServico,
             http: MdbHttpServico
           }
         ,contexto:
           {
-            rotaInicio: string, 
-            urlServidor: string, 
+            rotaInicio: string,
+            urlServidor: string,
             nomeSistema: string,
             confI18n?: string
           }
       }, httpClient: HttpClient): MDB {
-      
-      if (this.singleton == null) {
-        this.singleton = new MDB();
-        this.singleton._contexto = new Contexto();
-        this.singleton._util = new Util( I18n.Instance(dependencias.contexto.confI18n).traducao, dependencias.angular.router);
+
+      if (MDB.singleton == null) {
+        MDB.singleton = new MDB();
+        MDB.singleton._contexto = new Contexto();
+        MDB.singleton._util = new Util( I18n.Instance(dependencias.contexto.confI18n).traducao, dependencias.angular.router);
       }
       if(dependencias){
         const referenciaLingua: string = dependencias.contexto.confI18n ? dependencias.contexto.confI18n : 'pt-BR';
-        this.singleton.inciado = httpClient.get<any>('assets/i18n/' + referenciaLingua + '.json').map( (traducaoAplicacao) => {
-          if (traducaoAplicacao) {
-            Object.assign(this.singleton._util.traducao, traducaoAplicacao);
-          }
-          return true;
-        });
-        this.singleton._angular = {
+        MDB.inciado = httpClient.get<any>('assets/i18n/' + referenciaLingua + '.json').pipe(
+          map( (traducaoAplicacao) => {
+            if (traducaoAplicacao) {
+              Object.assign(MDB.singleton._util.traducao, traducaoAplicacao);
+            }
+            return true;
+          })
+        );
+        MDB.singleton._angular = {
           router: dependencias.angular.router,
           activatedRoute: dependencias.angular.activatedRoute,
-          formBuilder: dependencias.angular.formBuilder
+          formBuilder: dependencias.angular.formBuilder,
+          location: dependencias.angular.location
         };
 
-        this.singleton._servicos = {
+        MDB.singleton._servicos = {
           http: dependencias.servicos.http,
           mensagem: dependencias.servicos.mensagem
         };
-        this.singleton._contexto.nomeSistema = dependencias.contexto.nomeSistema;
-        this.singleton._contexto.urlServidor = dependencias.contexto.urlServidor;
-        this.singleton._contexto.rotaInicio = dependencias.contexto.rotaInicio;
+        MDB.singleton._contexto.nomeSistema = dependencias.contexto.nomeSistema;
+        MDB.singleton._contexto.urlServidor = dependencias.contexto.urlServidor;
+        MDB.singleton._contexto.rotaInicio = dependencias.contexto.rotaInicio;
       }
+      MDB.util().irParaInicio();
+      MDB.inciado.subscribe();
+      return MDB.singleton;
+  }
 
-      if(!this.singleton._contexto.possuiLoguin()) {
-        this.singleton._angular.router.navigateByUrl(this.singleton._contexto.rotaInicio);
+  static autenticar(delay: number = null) {
+    if(MDB.singleton && MDB.singleton._contexto)  {
+      const possuiLocalStorage = localStorage.getItem(MDB.singleton._contexto.nomeSistema) ? true : false;
+      if(possuiLocalStorage) {
+        localStorage.removeItem(MDB.singleton._contexto.nomeSistema);
       }
-      this.singleton.inciado.subscribe();
-      return this.singleton;
-	}
+      if(delay) {
+        MDB.mostrarConteudo = false;
+        const subscription: ISubscription = timer(delay,delay).subscribe(() => {
+          MDB.singleton._angular.router.navigateByUrl('autenticar');
+          MDB.mostrarConteudo = true;
+          subscription.unsubscribe();
+        });
+      } else {
+        MDB.singleton._angular.router.navigateByUrl('autenticar');
+      }
+    } else {
+      MDB.singleton._angular.router.navigateByUrl('autenticar');
+    }
+  }
 
-  static get contexto(): Contexto {
-    if(this.singleton) {
+  static contexto(): Contexto {
+    if(MDB.singleton) {
       return MDB.singleton._contexto;
     }
     return null;
   }
 
-  public static get servicos(): Servicos {
-    if(this.singleton) {
-      return this.singleton._servicos;
+  public static servicos(): Servicos {
+    if(MDB.singleton) {
+      return MDB.singleton._servicos;
     } else {
       return null;
     }
   }
 
-  public static get angular(): Angular {
-    if(this.singleton) {
-      return this.singleton._angular;
+  public static angular(): Angular {
+    if(MDB.singleton) {
+      return MDB.singleton._angular;
     } else {
       return null;
     }
   }
 
-  public static get util(): Util {
-    if(this.singleton) {
-      return this.singleton._util;
+  public static util(): Util {
+    if(MDB.singleton) {
+      return MDB.singleton._util;
     } else {
       return null;
     }
-  }
-
-  public static iniciado(): Observable<boolean> {
-    return MDB.singleton.inciado.map(iniciado => {
-      return iniciado
-    });
   }
 }
 
@@ -127,7 +147,7 @@ export class MDBLocalStorage {
 
     constructor(parametros: Partial<MDBLocalStorage> = null) {
       if (parametros) {
-        Object.assign(this, parametros);
+        Object.assign(MDB, parametros);
       }
     }
 }
@@ -141,13 +161,14 @@ export interface Angular {
   router: Router;
   activatedRoute: ActivatedRoute;
   formBuilder: FormBuilder;
+  location: Location;
 }
 
 export class Contexto {
   nomeSistema: string;
   urlServidor: string;
   rotaInicio: string;
-  // localStorage: MDBLocalStorage;
+
   set browser(storage: MDBLocalStorage){
     localStorage.setItem(this.nomeSistema,JSON.stringify(storage));
   }
@@ -160,11 +181,24 @@ export class Contexto {
 
   possuiLoguin(): boolean {
     const contexto = JSON.parse(localStorage.getItem(this.nomeSistema))
-    const token = MDB.util.buscarValor(contexto, 'usuario.token');
+    const token = MDB.util().buscarValor(contexto, 'usuario.token');
     if(token){
       return true;
     }
-	}
+  }
+
+  public voltar(delay: number = null) {
+    if(delay) {
+      MDB.mostrarConteudo = false;
+      const subscription: ISubscription = timer(delay,delay).subscribe(() => {
+        MDB.angular().location.back();
+        MDB.mostrarConteudo = true;
+        subscription.unsubscribe();
+      });
+    } else {
+      MDB.angular().location.back();
+    }
+  }
 }
 
 export class Util {
@@ -208,18 +242,6 @@ export class Util {
   }
 
   irParaInicio(): void {
-    this.rota.navigateByUrl(MDB.contexto.rotaInicio);
-  }
-  
-  decidirRota(tipoResposta: TipoResposta) {
-    if(tipoResposta.id === TipoResposta.SEM_MENU_ACS.id){
-      MDB.angular.router.navigateByUrl(MDB.contexto.rotaInicio);
-    }
-
-    if(tipoResposta.id === TipoResposta.NAO_AUTORIZADO.id){
-      MDB.servicos.mensagem.limparMensagem();
-      MDB.servicos.mensagem.addInformacao(tipoResposta.titulo,tipoResposta.mensagem);
-      MDB.angular.router.navigateByUrl('/autenticar');
-    }
+    this.rota.navigateByUrl(MDB.contexto().rotaInicio);
   }
 }

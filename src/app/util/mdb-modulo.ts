@@ -6,7 +6,7 @@ import { RouterModule } from "@angular/router";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
-import { MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTableModule, MatPaginatorModule, MatSortModule, MatDialogModule, MatDatepickerModule, MatMenuModule, MatTabsModule, MatAutocompleteModule, MatCheckboxModule, MatNativeDateModule, MatTooltipModule } from "@angular/material";
+import { MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTableModule, MatPaginatorModule, MatSortModule, MatDialogModule, MatDatepickerModule, MatMenuModule, MatTabsModule, MatAutocompleteModule, MatCheckboxModule, MatNativeDateModule, MatTooltipModule, MatPaginatorIntl, MAT_DATE_LOCALE } from "@angular/material";
 
 import { GridModule } from "../modulos/grid/grid.module";
 import { BotaoModule } from "../modulos/botao/botao.module";
@@ -29,67 +29,78 @@ import { MDBAutenticaoModule } from "../modulos/seguranca/autenticacao/mdb-auten
 import { MdbHttpServico } from "../modulos/http/mdb-http.servico";
 import { MdbAutenticacaoServico } from "../modulos/seguranca/autenticacao/mdb-autenticacao.servico";
 import { MdbMensagemServico } from "../modulos/mensagens/mensagens.service";
+import { WizardModule } from "../modulos/wizard/wizard.module";
+import { MdiasProvedorPaginacao } from "../modulos/provedores/mdias-provedor-paginacao";
 
 
 export class MdbModulo {
-    static forRoot(): NgModule {
-        return {
-            exports: [
-                RouterModule,
-                BrowserModule,
-                BrowserAnimationsModule,
-                HttpClientModule,
-                CommonModule,
-                
-                MatToolbarModule,
-                MatIconModule,
-                MatButtonModule,
-                MatCardModule,
-                MatFormFieldModule,
-                MatInputModule,
-                MatSelectModule,
-                MatTableModule,
-                MatPaginatorModule,
-                MatSortModule,
-                MatDialogModule,
-                MatDatepickerModule,
-                MatMenuModule,
-                MatTabsModule,
-                MatAutocompleteModule,
-                MatTooltipModule,
-                
-                MdiasModalModule,
-                ContainerModule,
-                GridModule,
-                BotaoModule,
-                FooterModule,
-                MensagensModule,
-                BotaoMenuModule,
-                BotaoMenuItemModule,
-                TarjetaModule,
-                FormsModule,
-                ReactiveFormsModule,
-                FiltroModule,
-                FormularioModule,
-                CardModule,
-                MdiasAutocompleteModule, 
-                MdiasTabelaModule,
-                MdiasAppModule,
-                MDBAutenticaoModule,
-                MatCheckboxModule,
-                MatNativeDateModule,
-            ],
-            providers: [ 
-                MdbAcsServico,
-                MdbHttpServico,
-                MdbAutenticacaoServico,
-                MdbMensagemServico,
-                {
-                    provide: HTTP_INTERCEPTORS,
-                    useClass: MdbHttpInterceptor,
-                    multi: true
-                },
-            ]
-        };
-    }
+	static forRoot(confi18n: string = 'pt-BR'): NgModule {
+		return {
+			exports: [
+				RouterModule,
+				BrowserModule,
+				BrowserAnimationsModule,
+				HttpClientModule,
+				CommonModule,
+				FormsModule,
+				ReactiveFormsModule,
+
+				MatToolbarModule,
+				MatIconModule,
+				MatButtonModule,
+				MatCardModule,
+				MatFormFieldModule,
+				MatInputModule,
+				MatSelectModule,
+				MatTableModule,
+				MatPaginatorModule,
+				MatSortModule,
+				MatDialogModule,
+				MatDatepickerModule,
+				MatMenuModule,
+				MatTabsModule,
+				MatAutocompleteModule,
+				MatTooltipModule,
+				MatCheckboxModule,
+				MatNativeDateModule,
+
+				MdiasModalModule,
+				ContainerModule,
+				GridModule,
+				BotaoModule,
+				FooterModule,
+				MensagensModule,
+				BotaoMenuModule,
+				BotaoMenuItemModule,
+				TarjetaModule,
+				FiltroModule,
+				FormularioModule,
+				CardModule,
+				MdiasAutocompleteModule,
+				MdiasTabelaModule,
+				MdiasAppModule,
+				MDBAutenticaoModule,
+				WizardModule
+			],
+			providers: [
+				MdbAcsServico,
+				MdbHttpServico,
+				MdbAutenticacaoServico,
+				MdbMensagemServico,
+				{
+					provide: HTTP_INTERCEPTORS,
+					useClass: MdbHttpInterceptor,
+					multi: true
+				},
+				{
+					provide: MAT_DATE_LOCALE, 
+					useValue: confi18n
+				},
+				{ 
+					provide: MatPaginatorIntl,
+					useClass: MdiasProvedorPaginacao
+				}
+			]
+		};
+	}
 }

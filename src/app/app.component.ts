@@ -1,13 +1,14 @@
-import { Component, AfterContentInit } from '@angular/core';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
-import { ROTA_INICIO, SERVIDOR } from './app.const';
+import { ROTA_INICIO, SERVIDOR, NOME_DA_APLICACAO } from './app.const';
 import { MDB } from './util/mdb';
 import { MdbMensagemServico } from './modulos/mensagens/mensagens.service';
 import { MdbHttpServico } from './modulos/http/mdb-http.servico';
 import { Observable } from 'rxjs';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -17,26 +18,27 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
 
-  constructor(httpClient: HttpClient, mdbHttpServico: MdbHttpServico, mensageria: MdbMensagemServico , router: Router, activatedRoute: ActivatedRoute, formBuild:FormBuilder) {
+  constructor(httpClient: HttpClient, mdbHttpServico: MdbHttpServico, mensageria: MdbMensagemServico , router: Router, activatedRoute: ActivatedRoute, formBuild:FormBuilder, location: Location) {
     MDB.incializar(
       {
          contexto:{
-          rotaInicio: ROTA_INICIO, 
-          urlServidor: SERVIDOR, 
-          nomeSistema: 'NOVOS TEMPOS'
+          rotaInicio: ROTA_INICIO,
+          urlServidor: SERVIDOR,
+          nomeSistema: NOME_DA_APLICACAO
         },angular:{
-          router:router, 
-          activatedRoute:activatedRoute, 
+          router:router,
+          activatedRoute:activatedRoute,
           formBuilder:formBuild,
+          location: location
         },servicos:{
-          mensagem:mensageria, 
+          mensagem:mensageria,
           http:mdbHttpServico
         }
       }, httpClient);
   }
 
   public iniciado(): Observable<boolean> {
-    return MDB.iniciado();
+    return MDB.inciado;
   }
 
 }

@@ -1,28 +1,5 @@
-@import "./assets/sass/variaveis";
-@import "./assets/sass/themaMaterial";
-
-@font-face {
-  font-family: "Fjalla One";
-  font-style: normal;
-  font-weight: 400;
-  src: url("assets/fonts/FjallaOne-Regular.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Roboto'), local('Roboto-Regular'),url("assets/fonts/Roboto-Regular.ttf") format("truetype");
-    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-/* ICONES */
-@font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src:  url('assets/fonts/material-icon.woff2') format('woff2');
-}
+@import "./variaveis";
+@import "./themaMaterial";
 
 .material-icons {
   font-family: 'Material Icons';
@@ -83,4 +60,28 @@ body {
 
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background{
 	background: rgb(0,93,170) !important;
+}
+
+
+@font-face {
+  font-family: "Fjalla One";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../node_modules/mdias-componentes/src/assets/fonts/FjallaOne-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto'), local('Roboto-Regular'),url("../node_modules/mdias-componentes/src/assets/fonts/Roboto-Regular.ttf") format("truetype");
+    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+/* ICONES */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src:  url('../node_modules/mdias-componentes/src/assets/fonts/material-icon.woff2') format('woff2');
 }

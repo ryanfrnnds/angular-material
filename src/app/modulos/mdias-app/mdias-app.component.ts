@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MDB } from '../../util/mdb';
 
 @Component({
   selector: 'mdias-app',
@@ -11,9 +12,12 @@ export class MdiasAppComponent implements OnInit {
   @Input() logoIcone: string;
   @Input() anoReferencia:string;
 
+  get mostrarConteudo(): boolean {
+    return MDB.mostrarConteudo;
+  };
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

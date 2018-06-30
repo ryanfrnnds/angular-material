@@ -108,4 +108,8 @@
 	    $i: $i + 1;
 	  }
 	}
+	.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background{
+		background: $cor-principal !important;
+	}
 }
+

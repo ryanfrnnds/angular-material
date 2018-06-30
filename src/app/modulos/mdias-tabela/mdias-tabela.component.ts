@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, ContentChildren, ViewChild, QueryList, Renderer, Renderer2, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ContentChildren, ViewChild, QueryList, Renderer2, Output, EventEmitter } from '@angular/core';
 
 import { ColunaComponent } from './coluna/coluna.component';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { Renderer3 } from '@angular/core/src/render3/renderer';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MDB } from '../../util/mdb';
 
@@ -25,22 +24,24 @@ export class MdiasTabelaComponent implements OnInit {
   @Input() public itensPorPagina: number;
 
   @Input() public set lista(value: any[]) {
-    
-    this.colunas.forEach(coluna => {
-      if(coluna.ehCheckbox == true) {
-        this.lista.forEach(item => {
-          this.selecionados.select(item);
-        });
-      }
-    }); 
-
     this._listaCompleta = new MatTableDataSource(value ? value : []);
     this._listaCompleta.sort = this.sort ;
-
+    
     if ( !this._ehLazy && this.ehPaginado ) {
       const pagina = this.paginador ? this.paginador._pageIndex : 0;
       this.controlarPaginacaoDeListaEstatica(pagina);
     }
+    
+    this.colunas.forEach(coluna => {
+      if(coluna.ehCheckbox == true) {
+        this.lista.forEach(item => {
+          if(item[coluna.atributo] == true) {
+            this.selecionados.select(item);
+          }
+        });
+      }
+    }); 
+
   }
   public get lista() {
     return this.getLista().data;
@@ -66,6 +67,10 @@ export class MdiasTabelaComponent implements OnInit {
 
   @Output() onLazy: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output() selecionarUm = new EventEmitter<any>();
+
+  @Output() selecionarTodos = new EventEmitter<any>();
+
   @ViewChild('paginador') private paginador: MatPaginator;
 
   @ContentChildren(ColunaComponent, { descendants: true }) public colunas: QueryList<ColunaComponent> = new QueryList<ColunaComponent>();
@@ -83,7 +88,7 @@ export class MdiasTabelaComponent implements OnInit {
     }
   }
 
-  private listaCabecalho() {
+  public listaCabecalho() {
     const listaCabecalho = [];
     this.colunas.forEach(coluna => {
       listaCabecalho.push(coluna.atributo);
@@ -91,7 +96,7 @@ export class MdiasTabelaComponent implements OnInit {
     return listaCabecalho;
   }
 
-  private alterarPagina(event) {
+  public alterarPagina(event) {
     if (!this._ehLazy) {
       this.controlarPaginacaoDeListaEstatica(event.pageIndex);
     } else {
@@ -100,11 +105,13 @@ export class MdiasTabelaComponent implements OnInit {
   }
 
   public mudarValorDoItem(item, atributo) {
+    this.selecionarUm.emit();
     this.selecionados.toggle(item);
     item[atributo] = !item[atributo];
   }
 
   public mudarValorDeTodos(atributo) {
+    this.selecionarTodos.emit();
     this.heTodosSelecionado() ? this.desmarcarTodosItens(atributo) : this.marcarTodosItens(atributo);
   }
 
@@ -143,15 +150,15 @@ export class MdiasTabelaComponent implements OnInit {
     }
   }
 
-  private getLista(): MatTableDataSource<any> {
+  public getLista(): MatTableDataSource<any> {
     if ( this.ehPaginado && !this._ehLazy) {
       return this.listaRenderizada;
     }
     return this._listaCompleta;
   }
 
-  private buscarValor(item: any, atributo: string) {
-    return MDB.util.buscarValor(item, atributo);
+  public buscarValor(item: any, atributo: string) {
+    return MDB.util().buscarValor(item, atributo);
   }
 
 }

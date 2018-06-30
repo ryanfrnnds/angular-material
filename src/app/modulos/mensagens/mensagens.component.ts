@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { MdbMensagemServico } from './mensagens.service';
 import { trigger,style,transition,animate,keyframes,query,stagger } from '@angular/animations';
 
@@ -23,7 +23,7 @@ import { trigger,style,transition,animate,keyframes,query,stagger } from '@angul
   ]
 })
 export class MensagensComponent implements OnInit {
-	constructor(private mensagensService: MdbMensagemServico) {
+	constructor(public mensagensService: MdbMensagemServico) {
 	}
 
 	ngOnInit() {

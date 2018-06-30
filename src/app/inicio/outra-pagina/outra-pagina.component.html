@@ -1,6 +1,6 @@
 <mdias-container nomeDaPagina="Outra pagina" icone="search">
 
-  <form  [formGroup]="formReuniao" class='form-horizontal' [ngStyle]="{'pointer-events': ehVisualizacao ? 'none':'auto'}">
+  <form  [formGroup]="formReuniao" class='form-horizontal'>
     <mdias-col>
         <mdias-autocomplete
         [controle] = "formReuniao.get('equipe')"

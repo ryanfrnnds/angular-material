@@ -1,9 +1,10 @@
-<mdias-navbar 
+<mdias-navbar
     [logoImg]="logoImg"
     icone="{{logoIcone}}"
 >   </mdias-navbar>
 
-<ng-content></ng-content>
+<mdias-mensagens></mdias-mensagens>
+<ng-content *ngIf="mostrarConteudo"></ng-content>
 
 <mdias-footer anoReferencia="{{anoReferencia}}">
 </mdias-footer>

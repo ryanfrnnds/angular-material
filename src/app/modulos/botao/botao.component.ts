@@ -22,7 +22,7 @@ export class BotaoComponent implements OnInit {
   @Input() tituloDialog: string;
   @Input() mensagemDialog: string;
 
-  private modalConfirmacaoAtivo: boolean = false;
+  public modalConfirmacaoAtivo: boolean = false;
 
   constructor(public router: Router) { }
 

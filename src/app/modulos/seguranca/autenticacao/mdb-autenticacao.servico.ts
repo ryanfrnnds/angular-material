@@ -1,16 +1,16 @@
 import {CanActivate, Router } from '@angular/router';
-import 'rxjs/add/operator/map';
+
 import { Injectable } from '@angular/core';
 
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { timer } from 'rxjs';
+
+
+
 import { MDB, MDBLocalStorage } from '../../../util/mdb';
 import { MDBHttp } from '../../http/mdb-http';
-import { ACSPermissoes } from '../../acs/mdb-acs';
 import { MenuItem } from '../../../modelo/menu-item';
-import { TipoResposta } from '../../http/tipo-resposta';
-import { ISubscription } from 'rxjs/Subscription';
-import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { SubscriptionLike as ISubscription } from 'rxjs';
+import { Usuario } from '../../../modelo/usuario';
 
 @Injectable()
 export class MdbAutenticacaoServico implements CanActivate {
@@ -20,7 +20,7 @@ export class MdbAutenticacaoServico implements CanActivate {
 
     public canActivate(): boolean {
       if(MDB)
-        if(MDB.contexto.possuiLoguin()) {
+        if(MDB.contexto().possuiLoguin()) {
             return true;
         }
         this.rota.navigateByUrl('/autenticar');
@@ -29,24 +29,21 @@ export class MdbAutenticacaoServico implements CanActivate {
 
     public autenticar(): void {
         if(MDB) {
-            MDB.servicos.http.post<any>(new MDBHttp('seguranca/login',ACSPermissoes.livre), null).subscribe(usuarioAutenticado => {
+            MDB.servicos().http.post<any>(new MDBHttp('seguranca/login'), null).subscribe(resposta => {
               let localStorage: MDBLocalStorage = new MDBLocalStorage();
-              localStorage.usuario = usuarioAutenticado.usuario;
-              MDB.contexto.browser = localStorage;
-              MDB.servicos.http.get<Array<MenuItem>>(new MDBHttp('menu/listar',ACSPermissoes.livre, {mostraError : false})).subscribe(menus => {
+              localStorage.usuario = resposta.usuario;
+              MDB.contexto().browser = localStorage;
+              MDB.servicos().http.get(new MDBHttp('menu/listar')).subscribe((menus:Array<MenuItem>) => {
                 localStorage.menu = menus;
-                MDB.contexto.browser = localStorage;
-                MDB.util.irParaInicio();
-              }, httpError => {
-                MDB.contexto.browser = localStorage;
-                MDB.util.decidirRota(TipoResposta.SEM_MENU_ACS);
+                MDB.contexto().browser = localStorage;
+                MDB.util().irParaInicio();
               });
-            }, httpError => {
+            }, () => {
                 let contador = 5;
-                const subscription: ISubscription = TimerObservable.create(0,1000).subscribe(() => {
-                  MDB.servicos.mensagem.limparMensagem();
+                const subscription: ISubscription = timer(0,1000).subscribe(() => {
+                  MDB.servicos().mensagem.limparMensagem();
                   if(contador > 0){
-                    MDB.servicos.mensagem.addErro('Falha de autenticação','Reconectando em '+ contador);
+                    MDB.servicos().mensagem.addErro(MDB.util().traduzir('mdbComponentes.autenticacao.titulo'),MDB.util().traduzir('mdbComponentes.autenticacao.reconectando',{contador:contador}));
                   }
                   if(contador === -1){
                     subscription.unsubscribe();
@@ -58,4 +55,3 @@ export class MdbAutenticacaoServico implements CanActivate {
           }
         }
 }
-

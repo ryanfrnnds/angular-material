@@ -1,7 +1,6 @@
 import { HttpHeaders, HttpParams } from "@angular/common/http";
-import { ACSPermissoes } from "../acs/mdb-acs";
 import { MDB } from "../../util/mdb";
-import { ErrorObservable } from "rxjs/observable/ErrorObservable";
+import { throwError, Observable } from "rxjs";
 import { TipoResposta } from "./tipo-resposta";
 import { MdbMensagemHttp } from "./mdb-mensagem-http";
 
@@ -17,8 +16,7 @@ export class MDBHttp {
 
     constructor
     (
-        private rest: string, 
-        public nivelAcs: ACSPermissoes
+        private rest: string
         , parametros: Partial<MDBHttp> = null) {
         if (parametros) {
           Object.assign(this, parametros);
@@ -26,7 +24,18 @@ export class MDBHttp {
         this.rest = rest;
       }
 
-    public get options() {
+    public get options(): {
+        headers?: HttpHeaders | {
+            [header: string]: string | string[];
+        };
+        observe?: 'body';
+        params?: HttpParams | {
+            [param: string]: string | string[];
+        };
+        reportProgress?: boolean;
+        responseType?: 'json';
+        withCredentials?: boolean;
+    } {
         return  {
             headers: this.headers,
             observe: this.observe,
@@ -39,23 +48,23 @@ export class MDBHttp {
 
     public get url(): string {
         if(this.rest){
-            return MDB.contexto.urlServidor + '/' + this.rest;
-        } 
-        return MDB.contexto.urlServidor;
+            return MDB.contexto().urlServidor + '/' + this.rest;
+        }
+        return MDB.contexto().urlServidor;
     }
 
     public set url(url: string) {
         if(this.rest){
-            this.rest = MDB.contexto.urlServidor + '/' + url;
-        } 
-        this.rest = MDB.contexto.urlServidor;
+            this.rest = MDB.contexto().urlServidor + '/' + url;
+        }
+        this.rest = MDB.contexto().urlServidor;
     }
 
-    public catch(httpError: any) {
+    public catch(httpError: any): Observable<never> {
         if(this.mostraError){
-            return ErrorObservable.create(this.error(httpError, this.mensagem));
+            return throwError(this.error(httpError, this.mensagem));
         } else {
-            return ErrorObservable.create(httpError);
+            return throwError(httpError);
         }
     }
 
@@ -69,15 +78,23 @@ export class MDBHttp {
     public error(httpError, mensagem: MdbMensagemHttp = new MdbMensagemHttp()): any {
         if(MDB) {
             let tituloError = mensagem.titulo ? mensagem.titulo : '';
-            let mensagemError = mensagem.falha ? mensagem.falha : MDB.util.buscarValor(httpError, 'error.mensagem');
-            mensagemError = mensagemError ? mensagemError : 'Servidor offline';
-    
-           if(httpError.status === TipoResposta.NAO_AUTORIZADO.status) {
-                MDB.util.decidirRota(TipoResposta.NAO_AUTORIZADO);
-           } else {
-                MDB.servicos.mensagem.limparMensagem();
-                MDB.servicos.mensagem.addErro(tituloError,mensagemError);
-           }
+            let mensagemError = mensagem.falha ? mensagem.falha : MDB.util().buscarValor(httpError, 'error.mensagem');
+            mensagemError = mensagemError ? mensagemError : MDB.util().buscarValor(httpError, 'error.message');
+            mensagemError = mensagemError ? mensagemError : MDB.util().buscarValor(httpError, 'message');
+            mensagemError = httpError.status === 0 ? 'Servidor offline' : mensagemError;
+
+            if(httpError.status === TipoResposta.AUTENTICACAO.status) {
+              MDB.servicos().mensagem.limparMensagem();
+              MDB.servicos().mensagem.addInformacao(MDB.util().traduzir('mdbComponentes.autenticacao.titulo'),MDB.util().traduzir('mdbComponentes.autenticacao.reautenticando'));
+              MDB.autenticar(3000);
+            } else if (httpError.status === TipoResposta.PERMISSAO_ACS.status) {
+              MDB.servicos().mensagem.limparMensagem();
+              MDB.servicos().mensagem.addErro('',MDB.util().traduzir('mdbComponentes.permissao.semAcesso'));
+              MDB.contexto().voltar(3000);
+            } else {
+              MDB.servicos().mensagem.limparMensagem();
+              MDB.servicos().mensagem.addErro(tituloError,mensagemError);
+            }
             return httpError;
         }
     }

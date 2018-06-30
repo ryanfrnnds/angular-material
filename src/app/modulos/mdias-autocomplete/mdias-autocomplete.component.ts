@@ -1,14 +1,11 @@
-import { Component, OnInit, SimpleChanges, Input, OnChanges, EventEmitter, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
+import { AbstractControl, FormControl, ValidatorFn, Validators } from '@angular/forms';
 
-import {Observable} from 'rxjs/Rx';
-import {startWith} from 'rxjs/operators/startWith';
-import {map} from 'rxjs/operators/map';
+import {Observable} from 'rxjs';
+import {startWith, map} from 'rxjs/operators';
 
-import { MatAutocomplete, MatInput, MatAutocompleteTrigger, MatAutocompleteSelectedEvent } from '@angular/material';
-import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { MatInput, MatAutocompleteTrigger, MatAutocompleteSelectedEvent } from '@angular/material';
 import { I18n } from '../../i18n';
-import { ISubscription } from 'rxjs/Subscription';
 import { MDB } from '../../util/mdb';
 
 @Component({
@@ -17,16 +14,16 @@ import { MDB } from '../../util/mdb';
   styleUrls: ['./mdias-autocomplete.component.scss']
 })
 export class MdiasAutocompleteComponent implements OnInit {
-  private evento: Evento;
+  public evento: Evento;
 
-   private _controle: AbstractControl = new FormControl();
+  public _controle: AbstractControl = new FormControl();
 
-   @ViewChild( MatAutocompleteTrigger)
-   autoTrigger: MatAutocompleteTrigger;
+  @ViewChild( MatAutocompleteTrigger)
+  autoTrigger: MatAutocompleteTrigger;
 
-   @ViewChild( 'input')
-   input: MatInput;
-   
+  @ViewChild( 'input')
+  input: MatInput;
+
   @Input() set controle(valorControle) {
     this._controle = valorControle;
   }
@@ -68,13 +65,13 @@ export class MdiasAutocompleteComponent implements OnInit {
       this._controle.clearValidators();
       this._controle.setValidators([this.possuiValor()]);
     }
-   
+
   }
 
-  private mostrarError(control: AbstractControl) {
+  public mostrarError(control: AbstractControl) {
     const traducao = I18n.Instance().traducao;
-    const obrigatorio = MDB.util.buscarValor(traducao, 'mdbComponentes.erro.obrigatoriedade');
-    const semValor = MDB.util.buscarValor(traducao, 'mdbComponentes.erro.semValorSelecionado');
+    const obrigatorio = MDB.util().buscarValor(traducao, 'mdbComponentes.erro.obrigatoriedade');
+    const semValor = MDB.util().buscarValor(traducao, 'mdbComponentes.erro.semValorSelecionado');
    
     if(control.hasError('required')) {
       return obrigatorio;
@@ -108,8 +105,8 @@ export class MdiasAutocompleteComponent implements OnInit {
         });
       }
       this.opcoes = this._controle.valueChanges.pipe( startWith<any>(''),
-          map(item => typeof item === 'string' ? item : item ? MDB.util.buscarValor(item, this.atributoDisplay) : '')
-          , map( (texto: string) => texto ? this.filtro(lista, texto) : this.filtro(lista,  MDB.util.buscarValor(this._controle.value, this.atributoDisplay) ))
+          map(item => typeof item === 'string' ? item : item ? MDB.util().buscarValor(item, this.atributoDisplay) : '')
+          , map( (texto: string) => texto ? this.filtro(lista, texto) : this.filtro(lista,  MDB.util().buscarValor(this._controle.value, this.atributoDisplay) ))
           , map( (lista: any[]) => {
             lista.forEach((element: any) => {
               element.display = element[this.atributoDisplay];
@@ -120,23 +117,23 @@ export class MdiasAutocompleteComponent implements OnInit {
     }
   }
 
-  private display(opcao?: any): string | undefined {
+  public display(opcao?: any): string | undefined {
     return opcao ? opcao.display : undefined;
   }
 
   public filtro<T>(lista, comparacao: string): T[] {
     if (comparacao) {
       return lista.filter(option =>
-        MDB.util.buscarValor(option, this.atributoDisplay).toLowerCase().includes(comparacao.toLowerCase()));
+        MDB.util().buscarValor(option, this.atributoDisplay).toLowerCase().includes(comparacao.toLowerCase()));
     } else {
       return lista.slice();
     }
   }
 }
 
-class Evento {
+export class Evento {
 
-  constructor(private componente: MdiasAutocompleteComponent ) {}
+  constructor(public componente: MdiasAutocompleteComponent ) {}
 
   focusout (event) {
     const componente: MdiasAutocompleteComponent = this.componente;

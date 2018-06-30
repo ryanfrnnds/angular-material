@@ -6,13 +6,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-  
-  logoFooter:string = "assets/img/logo-mdias-branca.png";
+  public logoFooter:string = "assets/img/logo-footer.png";
+
   @Input() anoReferencia:string;
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

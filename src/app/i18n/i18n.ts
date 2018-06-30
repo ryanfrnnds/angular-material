@@ -70,8 +70,14 @@ export class I18n {
                 'de': 'de'
             }
             ,'permissao': {
-                'semAcesso': 'Usuário não possui acesso a função',
-                'semFuncaoConfigurada': 'A tela não possui função configurada'
+                'semAcessoFuncao': 'Usuário não possui acesso a função',
+                'semFuncaoConfigurada': 'A tela não possui função configurada',
+                'semAcesso':'Acesso não permitido'
+            }
+            , 'autenticacao': {
+              'titulo' : 'Usuário não identificado'
+              ,'reautenticando' : 'Reautenticando...'
+              ,'reconectando' : 'Reconectando em {{contador}}'
             }
           }
       };

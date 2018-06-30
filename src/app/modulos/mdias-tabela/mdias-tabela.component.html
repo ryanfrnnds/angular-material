@@ -3,12 +3,16 @@
  		<ng-container *ngFor="let coluna of colunas" matColumnDef="{{coluna.atributo}}">
 			
 			<div *ngIf="coluna.ehCheckbox">
-				<mat-header-cell *matHeaderCellDef>
+				<mat-header-cell *matHeaderCellDef > 
 					<mdias-col l=12 m=12>
 						<mat-checkbox   (change)="$event ? mudarValorDeTodos(coluna.atributo) : null"
 										[checked]="selecionados.hasValue() && heTodosSelecionado()"
-										[indeterminate]="selecionados.hasValue() && !heTodosSelecionado()">
+										[indeterminate]="selecionados.hasValue() && !heTodosSelecionado()"
+										style="float: left">
 						</mat-checkbox>
+						<span  class="cabecalho-tabela-check">
+							{{coluna.valorCabecalho}} 
+						</span>
 					</mdias-col>
 				</mat-header-cell>
 				<mat-cell *matCellDef="let item">
@@ -24,11 +28,11 @@
 
 			<div *ngIf="!coluna.ehCheckbox">
 				<div *ngIf="coluna.ordenavel">
-					<mat-header-cell  *matHeaderCellDef mat-sort-header> {{coluna.valorCabecalho}} </mat-header-cell>
+					<mat-header-cell class="cabecalho-tabela" *matHeaderCellDef mat-sort-header> {{coluna.valorCabecalho}} </mat-header-cell>
 				</div>
 				
 				<div *ngIf="!coluna.ordenavel">
-					<mat-header-cell *matHeaderCellDef> {{coluna.valorCabecalho}} </mat-header-cell>
+					<mat-header-cell class="cabecalho-tabela" *matHeaderCellDef> {{coluna.valorCabecalho}} </mat-header-cell>
 				</div>
 				
 				<div *ngIf="coluna.template">
