@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('mdias-componentes App', () => {
+describe('mdb-blank App', () => {
   let page: AppPage;
 
   beforeEach(() => {

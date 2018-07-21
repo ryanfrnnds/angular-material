@@ -1,5 +1,3 @@
-export const NOME_DA_APLICACAO = 'NOVOS TEMPOS';
-export const ROTA_INICIO = '/inicio';
-export const SERVIDOR = 'http://10.0.64.58:8080/monitorRH-rest';
-// export const SERVIDOR = 'http://localhost:8080/gav-rest';
-
+export const NOME_DA_APLICACAO = 'BLANK';
+export const ROTA_INICIO = 'inicio';
+export const SERVIDOR = 'http://10.0.64.58:8080/MDB_BLANK-rest';

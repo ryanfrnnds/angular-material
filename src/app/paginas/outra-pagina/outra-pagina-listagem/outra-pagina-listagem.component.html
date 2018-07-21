@@ -1,0 +1,46 @@
+<mdias-container [nomeDaPagina]="mdbComponenteUtil.traduzir('parametro.titulo')" icone="search" [valorBotaoNovo]="mdbComponenteUtil.traduzir('mdbComponentes.botao.novo')" rotaBotaoNovo="outra-pagina/formulario">
+    <mdias-filtro
+        (pesquisar) = "evento.pesquisar()"
+        (limpar) = "evento.limpar()"
+    >
+    <!-- Filtros de pesquisa
+    <form class="form-horizontal" [formGroup]="formulario" (submit)="false">
+       
+    </form>
+    -->
+  </mdias-filtro>
+  <!--  TABELA!
+    <mdias-tabela
+        *ngIf="lista.length"
+        [lista] = "lista"
+      >
+        <mdias-coluna
+        [valorCabecalho] = "mdbComponenteUtil.traduzir('mdbComponentes.label.nome')"
+        [ordenavel] = "true"
+        atributo = "nome"
+        ></mdias-coluna>
+
+        <mdias-coluna
+        [valorCabecalho] = "mdbComponenteUtil.traduzir('mdbComponentes.label.dataCriacao')"
+        [ordenavel] = "true"
+        atributo = "dataCriacao"
+        >
+            <ng-template let-item="item">
+                {{item.dataCriacao | date:'dd/MM/yyyy HH:MM'}} 
+            </ng-template>
+        </mdias-coluna>
+
+        <mdias-coluna
+        [valorCabecalho] = "mdbComponenteUtil.traduzir('mdbComponentes.label.acoes')"
+        atributo = "acoes"
+        >
+        <ng-template let-indice="indice" let-item="item">
+          <mdias-botao-menu>
+              <mdias-botao-menu-item (clique)="evento.editar(item.id)" icone="create" [valor]="mdbComponenteUtil.traduzir('mdbComponentes.botao.editar')" ></mdias-botao-menu-item>
+              <mdias-botao-menu-item (clique)="evento.visualizar(item.id)" icone="remove_red_eye" [valor]="mdbComponenteUtil.traduzir('mdbComponentes.botao.visualizar')" ></mdias-botao-menu-item>
+          </mdias-botao-menu>  
+        </ng-template>
+        </mdias-coluna>
+    </mdias-tabela>
+    -->
+</mdias-container>

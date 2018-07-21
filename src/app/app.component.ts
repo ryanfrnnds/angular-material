@@ -1,24 +1,22 @@
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from "@angular/common/http";
 import { FormBuilder } from '@angular/forms';
+import { MDB, MdbHttpServico, MdbMensagemServico, MdiasAppService } from 'mdias-componentes';
 
-import { ROTA_INICIO, SERVIDOR, NOME_DA_APLICACAO } from './app.const';
-import { MDB } from './util/mdb';
-import { MdbMensagemServico } from './modulos/mensagens/mensagens.service';
-import { MdbHttpServico } from './modulos/http/mdb-http.servico';
+import { NOME_DA_APLICACAO, SERVIDOR, ROTA_INICIO } from './app.const';
 import { Observable } from 'rxjs';
-import { Location } from '@angular/common';
-
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}]
 })
 export class AppComponent {
-
-  constructor(httpClient: HttpClient, mdbHttpServico: MdbHttpServico, mensageria: MdbMensagemServico , router: Router, activatedRoute: ActivatedRoute, formBuild:FormBuilder, location: Location) {
+  
+  constructor(httpClient: HttpClient, mdiasAppServico: MdiasAppService,mdbHttpServico: MdbHttpServico, mensageria: MdbMensagemServico , router: Router, activatedRoute: ActivatedRoute, formBuild:FormBuilder, location: Location) {
     MDB.incializar(
       {
          contexto:{
@@ -32,7 +30,8 @@ export class AppComponent {
           location: location
         },servicos:{
           mensagem:mensageria,
-          http:mdbHttpServico
+          http:mdbHttpServico,
+          mdiasApp: mdiasAppServico
         }
       }, httpClient);
   }
@@ -40,5 +39,4 @@ export class AppComponent {
   public iniciado(): Observable<boolean> {
     return MDB.inciado;
   }
-
 }

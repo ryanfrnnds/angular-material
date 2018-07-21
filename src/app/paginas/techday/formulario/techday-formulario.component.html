@@ -1,0 +1,25 @@
+<mdias-container 
+	icone="add"
+	[nomeDaPagina]="'Sacffolding MDB - Formulário'" 
+>
+	<mdias-formulario  
+	[tituloDialogCancelar] = "!ehVisualizacao ? util.traduzir('mdbComponentes.operacao.mensagemGeral'):''"
+	[mensagemDialogCancelar] = "!ehVisualizacao ? util.traduzir('mdbComponentes.operacao.mensagemGeral') : ''"
+	[tituloDialogSalvar] = "util.traduzir('mdbComponentes.operacao.salvar')"
+	[mensagemDialogSalvar] = "util.traduzir('mdbComponentes.operacao.mensagemGeral')"
+	[mostrarSalvar] = "!ehVisualizacao"
+	[mostrarLimpar] = "!ehVisualizacao"
+	(salvar) = "evento.salvar()"
+	(cancelar) = "evento.cancelar()"
+	(limpar) = "evento.limpar()" 
+	>
+		<form class="form-horizontal" [formGroup]="formulario" (submit)="false">
+			<mdias-col l="6">
+				<mat-form-field>
+					<input matInput [formControl]="formulario.get('descricao')"  placeholder="Descricao">
+					<mat-error >{{util.error(formulario.get('descricao'))}}</mat-error>
+				</mat-form-field>
+			</mdias-col>
+		</form>
+	</mdias-formulario>
+</mdias-container>

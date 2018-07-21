@@ -1,27 +1,24 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
-import { InicioComponent } from './inicio/inicio.component';
-import { OutraPaginaComponent } from './inicio/outra-pagina/outra-pagina.component';
-import { MdbModulo } from './util/mdb-modulo';
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import {MdbModulo} from "mdias-componentes/";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { InicioComponent } from "./paginas/inicio/inicio.component";
+import { OutraPaginaModule } from "./paginas/outra-pagina/outra-pagina.module";
 
 @NgModule({
   declarations: [
-    AppComponent,
-    InicioComponent,
-    OutraPaginaComponent,
+    AppComponent, InicioComponent
   ],
   imports: [
     MdbModulo.forRoot().exports,
-    AppRoutingModule
+    AppRoutingModule, OutraPaginaModule
   ],
   providers: [
     MdbModulo.forRoot().providers
   ],
-  bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
-  ]
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

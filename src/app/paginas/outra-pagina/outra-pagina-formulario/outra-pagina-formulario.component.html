@@ -1,0 +1,23 @@
+  <mdias-container 
+    icone="add"
+    [nomeDaPagina]="mdbComponenteUtil.traduzir('parametro.titulo')" 
+>
+    <mdias-formulario  
+    [tituloDialogCancelar] = "mdbComponenteUtil.traduzir('mdbComponentes.operacao.mensagemGeral')"
+    [mensagemDialogCancelar] = "mdbComponenteUtil.traduzir('mdbComponentes.operacao.mensagemGeral')"
+    [tituloDialogSalvar] = "mdbComponenteUtil.traduzir('mdbComponentes.operacao.salvar')"
+    [mensagemDialogSalvar] = "mdbComponenteUtil.traduzir('mdbComponentes.operacao.mensagemGeral')"
+    [mostrarSalvar] = "true"
+    [mostrarLimpar] = "true"
+    (salvar) = "evento.salvar()"
+    (cancelar) = "evento.cancelar()"
+    (limpar) = "evento.limpar()" 
+    >
+    <!-- Formulário 
+        <form class="form-horizontal" [formGroup]="formulario" (submit)="false">
+            
+        </form>
+        -->
+       
+    </mdias-formulario>
+</mdias-container>
