@@ -1,0 +1,11 @@
+@import '../../../../assets/sass/variaveis';
+
+.mdias-acoes {
+	text-align: right;    
+	float: left;
+    font-family: $font-principal;
+	width: calc(100% + 8px);
+	margin: 0 -4px;
+	margin-bottom: 2px; 
+	padding: 8px;
+}

@@ -1,0 +1,85 @@
+@import '../../../assets/sass/variaveis';
+
+.modal-overlay{
+    background: black;
+    display: block;
+    position: fixed;
+    top: -25%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 125%;
+    width: 100%;
+    z-index: 1;
+    opacity: 0.5;
+    will-change: opacity;
+}
+
+.mdias-modal {
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: #fafafa;
+    max-height: 70%;
+    width: 70%;
+    margin: auto;
+    overflow-y: auto;
+    border-radius: 2px;
+    will-change: top, opacity;
+    padding: 16px 16px 0 16px;
+    top: 10%;
+
+    box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
+    z-index: 2;
+
+    h4 {
+        font-family: $font-titulo;
+        margin-top: 0;
+        font-size: 2rem;
+        line-height: 110%;
+        font-weight: 400;
+        background: linear-gradient(to right, #005daa 0%, #009fe0 100%);
+        color: #fff;
+        margin: -16px -16px 16px -16px;
+        padding: 16px;
+    }
+
+    .container {
+        margin: 0 auto;
+        width: 100%;
+    }
+    .container .row {
+      margin-left: (-1 * $gutter-width / 2);
+      margin-right: (-1 * $gutter-width / 2);
+    }
+      
+    .row {
+      margin-left: auto;
+      margin-right: auto;
+      &:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+    }
+}
+
+.mdias-confirmacao {
+    width: 350px;
+    padding: 25px;
+    h4 {
+        width: calc(100% + 50px);
+        text-align: center;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        margin: -25px;
+        padding: 10px 0;
+        background: linear-gradient(to right, $cor-principal 0%, $cor-principal-clara 100%);
+        color: #fff;
+        font-size: 1.2rem;
+    }
+    .row {
+        margin: 0;
+        margin-top: 40px;
+        text-align: center;
+    }
+}

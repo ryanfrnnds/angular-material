@@ -1,11 +1,8 @@
 {
-    "mensagem": {
-				"registroNaoEncontrado" : "Registro não encontrado!"
-			, "pesquisaNaoEncontrada" : "Nenhum registro na pesquisa foi encontrada!"
-			, "detalheNaoEncontrado" : "O lote: {{lote}} não possui detalhe"
-		}
-		, "error" : {
-        "soNumero" : "Somente números 0-9"
-        , "tamanhoMaximo" : "Maximo de {{max}} letras"
-    }
+  "teste" : "Teste",
+  "titulo" : {
+     "ti" : {
+       "t" : "Testando"
+     }
+  }
 }

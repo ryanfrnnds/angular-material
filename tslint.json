@@ -7,7 +7,7 @@
     "callable-types": true,
     "class-name": true,
     "comment-format": [
-      false,
+      true,
       "check-space"
     ],
     "curly": true,
@@ -17,20 +17,19 @@
     "eofline": true,
     "forin": true,
     "import-blacklist": [
-      false,
+      true,
       "rxjs",
       "rxjs/Rx"
     ],
     "import-spacing": true,
     "indent": [
-      false,
-      "spaces"
+      true,
     ],
     "interface-over-type-literal": true,
     "label-position": true,
     "max-line-length": [
-      true,
-      300
+      false,
+      140
     ],
     "member-access": false,
     "member-ordering": [
@@ -66,11 +65,11 @@
     ],
     "no-misused-new": true,
     "no-non-null-assertion": true,
-    "no-shadowed-variable": false,
+    "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-string-throw": true,
     "no-switch-case-fall-through": true,
-    "no-trailing-whitespace": false,
+    "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
     "no-unused-expression": true,
     "no-use-before-declare": true,
@@ -81,10 +80,11 @@
       "check-open-brace",
       "check-catch",
       "check-else",
+      "check-whitespace"
     ],
     "prefer-const": true,
     "quotemark": [
-      false,
+      true,
       "single"
     ],
     "radix": true,
@@ -97,7 +97,7 @@
       "allow-null-check"
     ],
     "typedef-whitespace": [
-      false,
+      true,
       {
         "call-signature": "nospace",
         "index-signature": "nospace",
@@ -123,12 +123,12 @@
       "camelCase"
     ],
     "component-selector": [
-      true,
+      false,
       "element",
       "app",
       "kebab-case"
     ],
-    "no-output-on-prefix": true,
+    "no-output-on-prefix": false,
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,

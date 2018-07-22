@@ -1,0 +1,20 @@
+@import '../../../assets/sass/variaveis';
+
+.tarjeta{
+    background: #F44336;
+    position: absolute;
+    width: 200px;
+    top: 5rem;
+    right: -85px;
+    text-align: center;
+    padding: 1rem;
+    color: #fff;
+    font-family: $font-principal;
+    opacity: 0.9;
+    z-index: -3;
+    font-weight: bold;
+    right: calc(50% - 100px);
+    margin: 0;
+    border-radius: 2rem;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}

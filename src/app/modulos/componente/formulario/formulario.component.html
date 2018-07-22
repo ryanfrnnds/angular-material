@@ -1,0 +1,28 @@
+<ng-content></ng-content>
+<mdias-acoes>
+    <mdias-botao *ngIf="mostrarSalvar"   
+    [valor]="nomeSalvar"   
+    (clique)="salvar.emit()"            
+    [ehDesabilitado]="desabilitarSalvar"
+    [tituloDialog]="tituloDialogSalvar" 
+    [mensagemDialog]="mensagemDialogSalvar" 
+    > </mdias-botao>
+
+    <mdias-botao *ngIf="mostrarCancelar" 
+    (clique)="cancelar.emit()"          
+    [valor]="nomeCancelar" 
+    [ehDesabilitado]="desabilitarCancelar" 
+    [tituloDialog]="tituloDialogCancelar" 
+    [mensagemDialog]="mensagemDialogCancelar" 
+    [estilo]="{'background-color': '#EF5350'}"
+    ></mdias-botao>
+
+    <mdias-botao *ngIf="mostrarLimpar"   
+    [valor]="nomeLimpar"   
+    [ehDesabilitado]="desabilitarLimpar"
+    (clique)="limpar.emit()" 
+    [tituloDialog]="tituloDialogLimpar" 
+    [mensagemDialog]="mensagemDialogLimpar" 
+    [estilo]="{'color':'#212121', 'background-color': 'transparent', 'box-shadow':'none'}"
+    ></mdias-botao>
+</mdias-acoes>

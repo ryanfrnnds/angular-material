@@ -1,0 +1,23 @@
+<div *ngIf="!menuItem.menus" class="menu-item">
+	<a routerLink="/{{menuItem.url}}">{{menuItem.titulo}}</a>
+</div>
+
+<div *ngIf="menuItem.menus" class="dropdown">
+	<div class="menu-item">
+		<a >{{menuItem.titulo}}</a>
+	</div>
+	<div class="dropdown-content">
+		<span *ngFor="let l2 of menuItem.menus">
+			<a *ngIf="!l2.menus" routerLink="/{{l2.url}}">{{l2.titulo}}</a>
+			<span *ngIf="l2.menus" class="clearfix">
+				<a>{{l2.titulo}}</a>
+				<div class="sub-menu">
+					<span *ngFor="let l3 of l2.menus">
+						<a *ngIf="!l3.menus" routerLink="/{{l3.url}}">{{l3.titulo}}</a>
+						<a *ngIf="l3.menus" routerLink="/{{l3.url}}">{{l3.titulo}}</a>
+					</span>
+				</div>
+			</span>
+		</span>
+	</div>
+</div>

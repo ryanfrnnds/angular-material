@@ -1,0 +1,69 @@
+@import '../../../assets/sass/variaveis';
+
+.wizard {
+	min-height: 300px;
+	.cabecalho {
+		display: flex;
+    	margin: 0 -1rem 0 -1rem;
+	    padding-bottom: 85px;
+	    h5 {
+	    	color: #757575;
+	    	font-size: 1rem;    
+	    	font-weight: 300;
+    		line-height: 1em;
+    		margin-top: 1rem;
+	    }
+		.etapa {
+		    width: 250px;
+		    text-align: center;
+		    border-bottom: 5px dashed #CCCCCC;
+		    height: 35px;
+		    width: 100%;
+	    	transition: border-color 0.5s ease;
+		    .circulo {
+		    	transition: background-color 0.5s ease;
+		    	transition: border-color 0.5s ease;
+			    display: inline-flex;
+				padding: 1.1rem 0.3rem;
+			    border-radius: 50%;
+			    color: #999999;
+			    border: 4px solid #CCCCCC;
+			    background: #ffffff;
+			    &:hover {
+			    	background: #EEEEEE;
+			    	color: #757575;
+			    }
+		    	.posicao{
+		    		font-size: 2rem;
+		    		width: 50px;
+		    		text-align: center;
+		    		mat-icon{
+		    			font-size: 2rem;
+					    width: auto;
+					    height: auto;
+		    		}
+		    	}
+		    }
+		}
+	}
+    .valido {
+	    border-bottom: 5px solid $cor-principal !important;
+    	.circulo{
+			color: $cor-principal !important;
+    		border: 4px solid $cor-principal !important;
+    	}
+    	h5 {
+    		color: $cor-principal !important;
+    	}
+    }
+    .ativo {
+	    border-bottom: 5px dashed $cor-principal !important;
+    	.circulo{
+			color: $cor-principal !important;
+    		border: 4px solid $cor-principal !important;
+    	}
+    	h5 {
+    		color: $cor-principal !important;
+    	}
+	}
+}

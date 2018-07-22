@@ -1,4 +1,7 @@
-<mdias-app *ngIf= "iniciado" >
-  <router-outlet></router-outlet>
+<mdias-app  *ngIf="iniciado()"
+			logoIcone="bug_report"
+			anoReferencia="2018">
+	<router-outlet></router-outlet>
 </mdias-app>
-<app-teste-listagem #teste></app-teste-listagem>
+
+

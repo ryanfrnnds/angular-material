@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "blank": {
+    "monitorRH": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/",
+            "outputPath": "dist/monitorRH",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -54,18 +54,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "blank:build"
+            "browserTarget": "monitorRH:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "blank:build:production"
+              "browserTarget": "monitorRH:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "blank:build"
+            "browserTarget": "monitorRH:build"
           }
         },
         "test": {
@@ -99,7 +99,7 @@
         }
       }
     },
-    "blank-e2e": {
+    "monitorRH-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -107,11 +107,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "blank:serve"
+            "devServerTarget": "monitorRH:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "blank:serve:production"
+              "devServerTarget": "monitorRH:serve:production"
             }
           }
         },
@@ -127,5 +127,5 @@
       }
     }
   },
-  "defaultProject": "blank"
+  "defaultProject": "monitorRH"
 }

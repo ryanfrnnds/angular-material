@@ -1,0 +1,112 @@
+@import '../../../../assets/sass/mdias-layout';
+
+.menu-item {
+    height: 100%;
+    font-family: $font-titulo;
+	display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+	a {
+		text-decoration: none;
+		color: #fff;
+	    height: 100%;
+	    display: block;
+	    padding: 1rem;
+	}
+    &:hover {
+		background: $cor-principal-escura;
+    }
+    &::after {
+    	margin-top: -4px;
+		content: '';
+		display: block;
+		position: relative;
+		width: 0;
+		height: 4px;
+		background: #fff;
+		transition: width .3s;
+	}
+	&:hover::after {
+	    width: 100%;
+	}
+
+
+}
+
+.dropdown {
+    transition: background-color 0.5s ease;
+    height: 100%;
+    position: relative;
+    z-index: 999;
+    &:hover {
+		background: $cor-principal-escura;
+		.menu-item{
+			transition-delay: 2s;
+			&::after {
+		    	margin-top: -4px;
+				content: '';
+				display: block;
+				position: relative;
+				width: 100%;
+				height: 4px;
+				background: #fff;
+			}
+		}
+
+		.dropdown-content {
+		    visibility: visible; 
+			opacity: 1;
+			z-index: 1;
+			transform: translateX(0%);
+			transition-delay: 0s, 0s, 0.3s;
+		}
+    }
+
+	.dropdown-content {
+		visibility: hidden;
+		opacity: 0;
+		position: absolute;
+		left: 0;
+		transform: translateX(-1em);
+		z-index: -1;
+		transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+		background: $cor-principal-escura;
+	    width: 100%;
+	    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	    a {
+    		font-family: $font-titulo;
+		    color: #fff;
+		    padding: 12px 16px;
+		    text-decoration: none;
+		    display: block;
+		    &:hover {background-color: rgba(255,255,255,0.1)};
+		}
+
+	}
+}
+
+.clearfix:after{
+  content: '.';
+  display: block;
+  clear: both;
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+
+.sub-menu {
+  display: none;
+  position: absolute;
+  min-width: 150px;
+}
+
+.clearfix {
+  position: relative;
+	&:hover{
+		.sub-menu{
+			display: block;
+		}
+	}
+}

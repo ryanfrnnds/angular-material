@@ -1,0 +1,82 @@
+@import '../../../assets/sass/variaveis';
+
+.mdias-mensagens-container {
+
+    position: fixed;
+    top: 85px;    
+    right: 20px;
+    width: 301px;
+    z-index: 1009;
+    
+    .mdias-alerta {
+
+        border: 0 none;
+        color: #212121;
+        margin: 0 0 14px 0;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+        position: relative;
+        margin: 0 0 10px 0;
+        opacity: 0.85;    
+        padding: 14px;
+        display: inline-block;
+
+        transition: opacity 0.5s;
+
+        .fechar {
+            position: absolute;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+            cursor: pointer;
+        }
+
+        .icone {
+            display: inline-block;
+            margin-right: 14px;
+            i{
+                font-size: inherit;
+                text-rendering: auto;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                text-indent: 0px !important;
+                text-align: center;
+                font-size: 36px;
+            }
+        }
+        
+
+        .conteudo {
+            label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 7px;
+            }
+            padding: 0 0 5px 0;
+            width: 220px;
+            float: right;
+            font-family: $font-principal;
+        }
+        
+        &:hover {
+            opacity: 1;
+            .fechar {
+                opacity: 1;
+            }
+        }
+    }
+
+    .SUCESSO {
+        background-color: #388e3c;
+        color: #fff;
+    }
+
+    .INFO {
+        background-color: #ffe399;
+    }
+
+    .ERRO {
+        background-color: #d32f2f;
+        color: #fff;
+    }
+}   

@@ -1,0 +1,36 @@
+@import '../../../../../assets/sass/mdias-layout';
+div {
+    text-align: center;
+    font-family: $font-titulo;
+}
+
+.acesso {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 0; 
+    margin-top: 5rem; 
+    padding-right: 2rem;
+    color: #b71c1c;
+}
+
+.negado {
+    margin-top: 0; 
+    font-size: 3.5rem;
+    margin-bottom: 0; 
+    padding-left: 2rem;
+    color: #b71c1c;
+}
+
+.voltar {
+    display: block;
+    margin-top:  4rem;
+    cursor: pointer;
+    width: 150px;
+    padding: 10px;
+    text-align: center;
+    margin-left: calc(50% - 75px); 
+    background: rgba(0,0,0,0.1);
+    &:hover {
+        background: rgba(0,0,0,0.2);
+    }
+}

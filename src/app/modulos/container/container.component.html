@@ -1,0 +1,15 @@
+<div class="titulo">
+	<div class="nomeDaPagina"><i class="material-icons mat-icon" *ngIf="icone">{{icone}}</i> {{nomeDaPagina}}</div>
+    <span class="example-spacer"></span>
+	<mdias-botao *ngIf="valorBotaoNovo"  [rota]="rotaBotaoNovo" [valor]="valorBotaoNovo"></mdias-botao>
+</div>
+
+<div class="container">
+ 	<div class="conteudo">
+		<mdias-card>
+			<div class="row">
+				<ng-content></ng-content>
+			</div>
+		</mdias-card>
+	</div>
+</div>

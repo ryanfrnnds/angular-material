@@ -1,0 +1,14 @@
+<mdias-navbar
+    [logoImg]="logoImg"
+    icone="{{logoIcone}}"
+>   </mdias-navbar>
+
+<mdias-mensagens></mdias-mensagens>
+<ng-content ></ng-content>
+
+<div class="loading" *ngIf="loadding()">
+    <div id="loader"></div>
+</div>
+
+<mdias-footer anoReferencia="{{anoReferencia}}">
+</mdias-footer>

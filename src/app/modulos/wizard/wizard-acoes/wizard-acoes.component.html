@@ -1,0 +1,4 @@
+<mdias-col l="12" m="12">
+	<button mat-button (click)="acaoDoAnterior()" [disabled]="ehDesabilitadoAnterior" class="anterior"><mat-icon>keyboard_arrow_left</mat-icon> {{valorAnterior}}</button>
+	<button mat-button (click)="acaoDoProximo()" [disabled]="ehDesabilitadoProximo" class="proximo"><mat-icon>keyboard_arrow_right</mat-icon> {{valorProximo}}</button>
+</mdias-col>
