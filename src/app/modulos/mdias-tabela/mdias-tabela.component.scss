@@ -2,11 +2,21 @@
     overflow: initial;
 
 }
+mat-cell:first-child {
+  padding-left: 0 !important;
+}
+
+.mat-cell {
+  display: block;
+  padding: 1rem 1rem 0px;
+}
 
 .cabecalho-tabela {
   font-size: 1rem !important;
   font-weight: bold;
   font-family: "Fjalla One", sans-serif;
+  display: inline;
+  padding: 1rem 1.5rem 1rem 0px;
   .col {
     font-size: 1rem !important;
     font-weight: bold;

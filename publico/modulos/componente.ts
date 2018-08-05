@@ -27,4 +27,4 @@ export * from '../../src/app/modulos/mdias-modal/mdias-modal.component';
 
 export * from '../../src/app/modulos/mdias-app/mdias-app.module';
 export * from '../../src/app/modulos/mdias-app/mdias-app.component';
-export * from '../../src/app/modulos/mdias-app/mdias-app.service';
+export * from '../../src/app/util/loading.service';

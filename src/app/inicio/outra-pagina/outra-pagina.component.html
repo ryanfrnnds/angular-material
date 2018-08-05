@@ -12,6 +12,8 @@
     </mdias-autocomplete>
     </mdias-col>
   </form>
+
+  <mdias-botao (clique)="teste()" icone="create" [valor]="'Editar'" ></mdias-botao>
 </mdias-container>
 
 {{formReuniao.get('equipe').value?.id}}

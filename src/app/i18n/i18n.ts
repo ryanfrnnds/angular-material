@@ -78,7 +78,11 @@ export class I18n {
             , 'autenticacao': {
               'titulo' : 'Usuário não identificado'
               ,'reautenticando' : 'Reautenticando...'
-              ,'reconectando' : 'Reconectando em {{contador}}'
+              ,'reconectando' : 'Redirecionando para logar em {{contador}}'
+            }
+            , 'sessaoExpirada': {
+              'titulo' : 'Sessão expirada'
+              ,'reconectando' : 'Redirecionando para logar em {{contador}}'
             }
           }
       };

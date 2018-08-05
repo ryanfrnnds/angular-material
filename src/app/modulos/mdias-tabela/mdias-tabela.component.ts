@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ContentChildren, ViewChild, QueryList, Renderer2, Output, EventEmitter } from '@angular/core';
-
 import { ColunaComponent } from './coluna/coluna.component';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MDB } from '../../util/mdb';
+import {Sort} from '@angular/material';
 
 @Component({
   selector: 'mdias-tabela',
@@ -25,7 +25,8 @@ export class MdiasTabelaComponent implements OnInit {
 
   @Input() public set lista(value: any[]) {
     this._listaCompleta = new MatTableDataSource(value ? value : []);
-    this._listaCompleta.sort = this.sort ;
+    // this._listaCompleta.sort = this.matSort ;
+    this.sortData(this.sort);
     
     if ( this.paginador && !this._ehLazy && this.ehPaginado ) {
       this.paginador.firstPage();
@@ -75,16 +76,26 @@ export class MdiasTabelaComponent implements OnInit {
 
   @ContentChildren(ColunaComponent, { descendants: true }) public colunas: QueryList<ColunaComponent> = new QueryList<ColunaComponent>();
 
-  @ViewChild(MatSort) sort: MatSort;
+  // @ViewChild(MatSort) matSort: MatSort;
+  sort: Sort;
 
   selecionados = new SelectionModel<Element>(true, []);
   
   constructor(private _renderer: Renderer2) { }
 
   ngOnInit() {
-
     if ( !this._ehLazy && this.ehPaginado ) {
       this.controlarPaginacaoDeListaEstatica(0);
+    }
+  }
+
+  sortData(sort: Sort) {
+    this.sort = sort;
+    if(sort && sort.active) {
+      this.getLista().data = this.lista.sort((atual, proximo) => {
+        const isAsc = sort.direction === 'asc';
+        return compare(atual[sort.active], proximo[sort.active], isAsc);
+      })
     }
   }
 
@@ -141,9 +152,11 @@ export class MdiasTabelaComponent implements OnInit {
     const inicioPagina = numeroPagina * this.itensPorPagina;
 
     this.listaRenderizada = new MatTableDataSource(this._listaCompleta.data.slice(inicioPagina, ( inicioPagina + this.itensPorPagina) ));
-
-    this.listaRenderizada.sort = this.sort;
-    this._listaCompleta.sort = this.sort;
+/*
+    this.listaRenderizada.sort = this.matSort;
+    this._listaCompleta.sort = this.matSort;
+    */
+    this.sortData(this.sort);
   }
 
   public getLista(): MatTableDataSource<any> {
@@ -157,4 +170,8 @@ export class MdiasTabelaComponent implements OnInit {
     return MDB.util().buscarValor(item, atributo);
   }
 
+}
+
+function compare(a, b, isAsc) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

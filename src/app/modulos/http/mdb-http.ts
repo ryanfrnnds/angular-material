@@ -3,10 +3,10 @@ import { MDB } from "../../util/mdb";
 import { throwError, Observable, of } from "rxjs";
 import { TipoResposta } from "./tipo-resposta";
 import { MdbMensagemHttp } from "./mdb-mensagem-http";
-import { MdiasAppService } from "../mdias-app/mdias-app.service";
+import { LoadingService } from "../../util/loading.service";
 
 export class MDBHttp {
-    public mostraError: boolean = true;
+    public mostrarMensagem: boolean = true;
     public mensagem: MdbMensagemHttp = new MdbMensagemHttp();
     public headers: HttpHeaders = new HttpHeaders();
     public params: HttpParams;
@@ -19,7 +19,7 @@ export class MDBHttp {
     (
 
 			  private rest: string
-			, parametros: Partial<MDBHttp> = null
+            , parametros: Partial<MDBHttp> = null
 		)
 				{
 			if (parametros) {
@@ -58,47 +58,16 @@ export class MDBHttp {
     }
 
     public set url(url: string) {
-        if(this.rest){
-            this.rest = MDB.contexto().urlServidor + '/' + url;
-        }
-        this.rest = MDB.contexto().urlServidor;
+			if(this.rest){
+				this.rest = MDB.contexto().urlServidor + '/' + url;
+			}
+			this.rest = MDB.contexto().urlServidor;
     }
-
-    public catch(httpError: any): Observable<never> {
-        if(this.mostraError){
-            return throwError(this.error(httpError, this.mensagem));
-        } else {
-            return throwError(httpError);
-        }
-    }
-
+    
     public addHeader(nome: string , value: string | string[]) {
         if(value) {
             this.headers = this.headers ? this.headers : new HttpHeaders();
             this.headers = this.headers.append(nome,value);
-        }
-    }
-
-    public error(httpError, mensagem: MdbMensagemHttp = new MdbMensagemHttp()): any {
-        if(MDB) {
-            let tituloError = mensagem.titulo ? mensagem.titulo : '';
-            let mensagemError = mensagem.falha ? mensagem.falha : MDB.util().buscarValor(httpError, 'error.mensagem');
-            mensagemError = mensagemError ? mensagemError : MDB.util().buscarValor(httpError, 'error.message');
-            mensagemError = mensagemError ? mensagemError : MDB.util().buscarValor(httpError, 'message');
-            if(httpError.status === 0 && !mensagemError) {
-                mensagemError = 'Servidor offline';
-            }
-
-            if(httpError.status === TipoResposta.AUTENTICACAO.status) {
-              MDB.servicos().mensagem.limparMensagem();
-              MDB.servicos().mensagem.addInformacao(MDB.util().traduzir('mdbComponentes.autenticacao.titulo'),MDB.util().traduzir('mdbComponentes.autenticacao.reautenticando'));
-              MDB.autenticar(3000);
-            }
-            else {
-              MDB.servicos().mensagem.limparMensagem();
-              MDB.servicos().mensagem.addErro(tituloError,mensagemError);
-            }
-            return httpError;
         }
     }
 }

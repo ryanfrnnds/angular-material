@@ -1,6 +1,6 @@
 import { MdbMensagemServico } from '../modulos/mensagens/mensagens.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MdbHttpServico } from '../modulos/http/mdb-http.servico';
+
 import { Usuario } from '../modelo/usuario';
 import { MenuItem } from '../modelo/menu-item';
 import { FormBuilder } from '@angular/forms';
@@ -13,7 +13,10 @@ import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { timer, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MdiasAppService } from '../modulos/mdias-app/mdias-app.service';
+import { LoadingService } from './loading.service';
+import { DependenciasService } from './dependencias.service';
+import { AppInfo } from '../modelo/app-info';
+import { MdbHttpService } from '../../../publico/modulos/http';
 
 export class MDB {
   private static singleton: MDB = null;
@@ -26,80 +29,60 @@ export class MDB {
 
 	private constructor() {}  
 
-    public static incializar(
-      dependencias:
-      {
-        angular:
-          {
-            router: Router,
-            activatedRoute: ActivatedRoute,
-            formBuilder: FormBuilder,
-            location: Location
-          }
-        ,servicos:
-          {
-            mensagem: MdbMensagemServico,
-            mdiasApp: MdiasAppService,
-            http: MdbHttpServico
-          }
-        ,contexto:
-          {
-            rotaInicio: string,
-            urlServidor: string,
-            nomeSistema: string,
-            confI18n?: string
-          }
-      }, httpClient: HttpClient): MDB {
+    public static incializar(dependencias: DependenciasService): MDB {
 
       if (MDB.singleton == null) {
         MDB.singleton = new MDB();
         MDB.singleton._contexto = new Contexto();
-        MDB.singleton._util = new Util( I18n.Instance(dependencias.contexto.confI18n).traducao, dependencias.angular.router);
+        MDB.singleton._util = new Util( I18n.Instance(dependencias.confI18n).traducao, dependencias.router);
       }
       if(dependencias){
-        const referenciaLingua: string = dependencias.contexto.confI18n ? dependencias.contexto.confI18n : 'pt-BR';
-        MDB.inciado = httpClient.get<any>('assets/i18n/' + referenciaLingua + '.json').pipe(
-          map( (traducaoAplicacao) => {
-            if (traducaoAplicacao) {
-              Object.assign(MDB.singleton._util.traducao, traducaoAplicacao);
-            }
-            return true;
-          })
-        );
-        MDB.singleton._angular = {
-          router: dependencias.angular.router,
-          activatedRoute: dependencias.angular.activatedRoute,
-          formBuilder: dependencias.angular.formBuilder,
-          location: dependencias.angular.location
-        };
-
-        MDB.singleton._servicos = {
-          http: dependencias.servicos.http,
-          mensagem: dependencias.servicos.mensagem,
-          mdiasApp: dependencias.servicos.mdiasApp
-        };
-        MDB.singleton._contexto.nomeSistema = dependencias.contexto.nomeSistema;
-        MDB.singleton._contexto.urlServidor = dependencias.contexto.urlServidor;
-        MDB.singleton._contexto.rotaInicio = dependencias.contexto.rotaInicio;
+        MDB.singleton.construirInternacionalizacao(dependencias);
+        MDB.singleton.construirDependenciasAngular(dependencias);
+        MDB.singleton.construirDependenciasServicos(dependencias);
+       
+        MDB.singleton._contexto.nomeSistema = dependencias.nomeSistema;
+        MDB.singleton._contexto.urlServidor = dependencias.urlServidor;
+        MDB.singleton._contexto.rotaInicio = dependencias.rotaInicio;
+        dependencias.httpClient.get(dependencias.urlServidor+'/app/info').subscribe((resposta:AppInfo)=>{
+          MDB.singleton._contexto.versao = resposta.version;
+        });
       }
       MDB.util().irParaInicio();
       MDB.inciado.subscribe();
       return MDB.singleton;
   }
 
-  static autenticar(delay: number = null) {
-    if(MDB.singleton && MDB.singleton._contexto)  {
-      if(delay) {
-        const subscription: ISubscription = timer(delay).subscribe(() => {
-          MDB.singleton._angular.router.navigateByUrl('autenticar');
-          subscription.unsubscribe();
-        });
-      } else {
-        MDB.singleton._angular.router.navigateByUrl('autenticar');
-      }
-    } else {
-      MDB.singleton._angular.router.navigateByUrl('autenticar');
-    }
+  private construirInternacionalizacao(dependencias:DependenciasService) {
+    MDB.inciado = dependencias.httpClient.get<any>('assets/i18n/' + dependencias.confI18n + '.json').pipe(
+      map( (traducaoAplicacao) => {
+        if (traducaoAplicacao) {
+          Object.assign(MDB.singleton._util.traducao, traducaoAplicacao);
+        }
+        return true;
+      })
+    );
+  }
+
+  private construirDependenciasAngular(dependencias:DependenciasService  ) {
+    MDB.singleton._angular = {
+      router: dependencias.router,
+      activatedRoute: dependencias.activatedRoute,
+      formBuilder: dependencias.formBuilder,
+      location: dependencias.location
+    };
+  }
+
+  private construirDependenciasServicos(dependencias:DependenciasService  ) {
+    MDB.singleton._servicos = {
+      http: dependencias.mdbHttpServico,
+      mensagem: dependencias.mensageria,
+      loading: dependencias.loadingService
+    };
+  }
+
+  static autenticar() {
+    MDB.singleton._angular.router.navigateByUrl('autenticar');
   }
 
   static contexto(): Contexto {
@@ -156,8 +139,8 @@ export class MDBLocalStorage {
 
 export interface Servicos {
   mensagem: MdbMensagemServico;
-  http: MdbHttpServico;
-  mdiasApp: MdiasAppService;
+  http: MdbHttpService;
+  loading: LoadingService;
 }
 
 export interface Angular {
@@ -171,18 +154,19 @@ export class Contexto {
   nomeSistema: string;
   urlServidor: string;
   rotaInicio: string;
+  versao: string;
 
-  set browser(storage: MDBLocalStorage){
+  set localStorage(storage: MDBLocalStorage){
     localStorage.setItem(this.nomeSistema,JSON.stringify(storage));
   }
 
-  get browser(): MDBLocalStorage{
+  get localStorage(): MDBLocalStorage{
     return JSON.parse(localStorage.getItem(this.nomeSistema));
   }
 
   constructor(){};
 
-  possuiLoguin(): boolean {
+  possuiLogin(): boolean {
     const contexto = JSON.parse(localStorage.getItem(this.nomeSistema))
     const token = MDB.util().buscarValor(contexto, 'usuario.token');
     if(token){
@@ -208,9 +192,6 @@ export class Contexto {
   public deslogar() {
     const url: string = window.location.href.split("#")[0].split("//")[1];
     MDB.limparLocalStorage();
-    console.log(window.location.href.split("#")[0]);
-    console.log(window.location.href.split("#")[0].split("//")[1]);
-    console.log(url);
     if(url.includes('wlsistemas')) {clearImmediate
       let irPara:string = "";
       if(url.startsWith('dev')) {
@@ -220,7 +201,6 @@ export class Contexto {
       } else {
         irPara = 'https://oam.mdb.com.br/oam/server/logout?end_url='+window.location.href.split("#")[0];
       }
-      console.log(irPara);
       window.location.href = irPara;
     } else {
       MDB.autenticar();

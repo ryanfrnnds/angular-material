@@ -1,5 +1,5 @@
 <mdias-col s="12" m="12" l="12">
-	<mat-table [dataSource]="getLista()" matSort>
+	<mat-table [dataSource]="getLista()" matSort (matSortChange)="sortData($event)" matSortDisableClear>
  		<ng-container *ngFor="let coluna of colunas" matColumnDef="{{coluna.atributo}}">
 			
 			<div *ngIf="coluna.ehCheckbox">

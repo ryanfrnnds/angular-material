@@ -5,8 +5,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { CookieService } from 'ngx-cookie-service';
-
 import { MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTableModule, MatPaginatorModule, MatSortModule, MatDialogModule, MatDatepickerModule, MatMenuModule, MatTabsModule, MatAutocompleteModule, MatCheckboxModule, MatNativeDateModule, MatTooltipModule, MatPaginatorIntl, MAT_DATE_LOCALE } from "@angular/material";
 
 import { GridModule } from "../modulos/grid/grid.module";
@@ -27,12 +25,15 @@ import { MdbHttpInterceptor } from "../modulos/seguranca/interceptador/mdb-http-
 import { MdiasAutocompleteModule } from "../modulos/mdias-autocomplete/mdias-autocomplete.module";
 import { MdiasAppModule } from "../modulos/mdias-app/mdias-app.module";
 import { MDBAutenticaoModule } from "../modulos/seguranca/autenticacao/mdb-autenticacao.module";
-import { MdbHttpServico } from "../modulos/http/mdb-http.servico";
 import { MdbAutenticacaoServico } from "../modulos/seguranca/autenticacao/mdb-autenticacao.servico";
 import { MdbMensagemServico } from "../modulos/mensagens/mensagens.service";
 import { WizardModule } from "../modulos/wizard/wizard.module";
 import { MdiasProvedorPaginacao } from "../modulos/provedores/mdias-provedor-paginacao";
-import { MdiasAppService } from "../modulos/mdias-app/mdias-app.service";
+import { LoadingService } from "./loading.service";
+import { DependenciasService } from "./dependencias.service";
+import { MdbHttpService } from "../../../publico/modulos/http";
+import { SessionOnload } from "../modulos/session-storage/session-storage-onload";
+import { SessionSSO } from "../../../publico/modulos/session-storage";
 
 
 export class MdbModulo {
@@ -86,21 +87,23 @@ export class MdbModulo {
 			],
 			providers: [
 				MdbAcsServico,
-				MdbHttpServico,
+				MdbHttpService,
 				MdbAutenticacaoServico,
 				MdbMensagemServico,
-				MdiasAppService,
-				CookieService,
+				LoadingService,
+				DependenciasService,
+				SessionOnload,
+				SessionSSO,
 				{
 					provide: HTTP_INTERCEPTORS,
 					useClass: MdbHttpInterceptor,
 					multi: true
 				},
 				{
-					provide: MAT_DATE_LOCALE, 
+					provide: MAT_DATE_LOCALE,
 					useValue: confi18n
 				},
-				{ 
+				{
 					provide: MatPaginatorIntl,
 					useClass: MdiasProvedorPaginacao
 				}

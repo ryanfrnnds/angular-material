@@ -4,6 +4,8 @@ import { MdbMensagemServico } from '../../modulos/mensagens/mensagens.service';
 import { Router } from '@angular/router';
 import { MdiasAppComponent } from '../../modulos/mdias-app/mdias-app.component';
 import { MdbAcsServico } from '../../modulos/acs/servico';
+import { MDB } from '../../util/mdb';
+import { MDBHttp } from '../../modulos/http/mdb-http';
 
 @Component({
   selector: 'mdias-outra-pagina',
@@ -27,13 +29,18 @@ export class OutraPaginaComponent implements OnInit {
       });
     }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['item'] && changes['item'].currentValue ) {
         this.item = changes['item'].currentValue;
         this.formReuniao.patchValue({equipe: this.item});
     }
+  }
+  teste(){
+    MDB.servicos().http.get(new MDBHttp("parametro/teste")).subscribe(obj => {
+    });
   }
 
 }

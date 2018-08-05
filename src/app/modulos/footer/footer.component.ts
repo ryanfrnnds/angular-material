@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MatBadge } from '@angular/material';
+import { MDB } from '../../util/mdb';
 
 @Component({
   selector: 'mdias-footer',
@@ -12,4 +14,8 @@ export class FooterComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  public get versao(): string {
+    return MDB.contexto().versao;
+  }
 }

@@ -18,22 +18,22 @@ export class NavbarComponent implements OnInit {
   }
 
   get nomeUsuario() {
-    if(MDB.contexto().browser) {
-      return MDB.contexto().browser.usuario.nome;
+    if(MDB.contexto().localStorage) {
+      return MDB.contexto().localStorage.usuario.nome;
     }
     return '';
   }
 
   get codigoUsuario() {
-    if( MDB.contexto().browser) {
-      return  MDB.contexto().browser.usuario.codigo;
+    if( MDB.contexto().localStorage) {
+      return  MDB.contexto().localStorage.usuario.codigo;
     }
     return '';
   }
 
   get menu(): MenuItem[] {
-    if(MDB.contexto().browser) {
-      return MDB.contexto().browser.menu;
+    if(MDB.contexto().localStorage) {
+      return MDB.contexto().localStorage.menu;
     } else {
       return [];
     }

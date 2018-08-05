@@ -1,5 +1,4 @@
 export * from './publico/modelo';
-export * from './publico/modelo';
 export * from './publico/modulos/botao';
 export * from './publico/modulos/card';
 export * from './publico/modulos/componente';
@@ -8,4 +7,5 @@ export * from './publico/modulos/footer';
 export * from './publico/modulos/grid';
 export * from './publico/modulos/http';
 export * from './publico/modulos/seguranca';
+export * from './publico/modulos/session-storage';
 export * from './publico/utilitario';

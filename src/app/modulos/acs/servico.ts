@@ -9,14 +9,14 @@ import { MDB } from '../../util/mdb';
 import { MDBHttp } from '../http/mdb-http';
 import { ACSAcessoGrupo } from './acesso-grupo';
 import { ACSPermissoes } from './permissoes';
-import { MdiasAppService } from '../../modulos/mdias-app/mdias-app.service';
+import { LoadingService } from '../../util/loading.service';
 
 
 
 @Injectable()
 export class MdbAcsServico implements CanActivate {
 
-  constructor(private mdiasAppService: MdiasAppService) {}
+  constructor(private mdiasAppService: LoadingService) {}
 
     public ehPermitidoExclusao(funcao: string): Observable<boolean> {
 			return  MDB.servicos().http.post<any>(new MDBHttp('acesso/consultar/funcoes'), [funcao])
@@ -29,7 +29,7 @@ export class MdbAcsServico implements CanActivate {
 									}
 							}
 							return false;
-						}), 
+						}),
 				catchError((httpError) => {
 							return throwError(httpError);
 				})
@@ -47,7 +47,7 @@ export class MdbAcsServico implements CanActivate {
                 }
 							}
 							return false;
-						}), 
+						}),
 				catchError((httpError) => {
 							return throwError(httpError);
 				})
@@ -65,7 +65,7 @@ export class MdbAcsServico implements CanActivate {
                 }
 							}
 							return false;
-						}), 
+						}),
 				catchError((httpError) => {
 							return throwError(httpError);
 				})
@@ -83,7 +83,7 @@ export class MdbAcsServico implements CanActivate {
                 }
 							}
 							return false;
-						}), 
+						}),
 				catchError((httpError) => {
 							return throwError(httpError);
 				})
@@ -103,7 +103,7 @@ export class MdbAcsServico implements CanActivate {
 									return false;
                 }
                 return true;
-								}), 
+								}),
 							catchError((httpError) => {
 										return throwError(httpError);
 							})
